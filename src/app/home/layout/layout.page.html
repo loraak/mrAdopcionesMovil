@@ -1,0 +1,47 @@
+<!-- Header Nivel App -->
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #D81B60; --color: #ffffff;">
+    <ion-title slot="start" class="brand-title">
+      <img src="assets/icon/mrfresh.png" class="header-logo" alt="Logo" />
+      <span>Mr Adopciones</span>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      @if (isLoggedIn) {
+        <ion-button (click)="logout()">
+          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
+      } @else {
+        <ion-button routerLink="/login" color="light">
+          Iniciar Sesión
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="main-content">
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>
+
+<ion-tab-bar slot="bottom" class="custom-tab-bar">
+  <ion-tab-button tab="home" routerLink="/app/home">
+    <ion-icon name="home-outline"></ion-icon>
+    <ion-label>Inicio</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button tab="catalog" routerLink="/app/catalogo">
+    <ion-icon name="paw-outline"></ion-icon>
+    <ion-label>Catálogo</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button tab="about-us" routerLink="/app/about-us">
+    <ion-icon name="information-circle-outline"></ion-icon>
+    <ion-label>Nosotros</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button tab="blog" routerLink="/app/blog">
+    <ion-icon name="newspaper-outline"></ion-icon>
+    <ion-label>Blog</ion-label>
+  </ion-tab-button>
+</ion-tab-bar>

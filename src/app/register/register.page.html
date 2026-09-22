@@ -1,0 +1,113 @@
+<ion-content class="login-content">
+  <div class="login-section">
+    <div class="login-container">
+
+      <!-- Logo y Título -->
+      <div class="logo-container">
+        <img src="assets/icon/mrfresh.png" class="logo-img" alt="Logo Mr. Adopciones" />
+        <span class="logo-text">Mr Adopciones</span>
+      </div>
+
+      <div class="login-subtitle">¡Únete a nuestra comunidad y salva vidas! :3</div>
+      <h1 class="login-title">Crear Cuenta</h1>
+
+      <!-- Selección de Tipo de Usuario -->
+      <ion-segment [(ngModel)]="role" class="custom-segment">
+        <ion-segment-button value="ADOPTANTE">
+          <ion-label>Quiero adoptar</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="DONANTE">
+          <ion-label>Ofrecer en adopción</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Formulario de Registro -->
+      <form (ngSubmit)="onRegister()" class="ion-margin-top">
+
+        <!-- Campos Generales (Comunes a ambos) -->
+        <ion-input
+          class="custom-input"
+          label="Nombre de usuario"
+          labelPlacement="floating"
+          fill="outline"
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          [required]="true"
+        ></ion-input>
+
+        <ion-input
+          class="custom-input"
+          label="Correo electrónico"
+          labelPlacement="floating"
+          fill="outline"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          [required]="true"
+        ></ion-input>
+
+        <ion-input
+          class="custom-input"
+          label="Contraseña"
+          labelPlacement="floating"
+          fill="outline"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          [required]="true"
+        ></ion-input>
+
+        @if (role === 'ADOPTANTE') {
+          <div>
+            <ion-input
+              class="custom-input"
+              label="Número celular"
+              labelPlacement="floating"
+              fill="outline"
+              type="tel"
+              [(ngModel)]="phone"
+              name="phone"
+              [required]="true"
+            ></ion-input>
+          </div>
+        }
+
+        @if (role === 'DONANTE') {
+          <div>
+            <ion-input
+              class="custom-input"
+              label="Ubicación / Ciudad"
+              labelPlacement="floating"
+              fill="outline"
+              type="text"
+              [(ngModel)]="location"
+              name="location"
+            ></ion-input>
+            <ion-input
+              class="custom-input"
+              label="Organización"
+              labelPlacement="floating"
+              fill="outline"
+              type="text"
+              [(ngModel)]="organization"
+              name="organization"
+            ></ion-input>
+          </div>
+        }
+
+        <ion-button expand="block" type="submit" class="btn-primary ion-margin-top">
+          Registrarse
+        </ion-button>
+      </form>
+
+      <div class="login-footer">
+        <p>
+          ¿Ya tienes una cuenta?
+          <ion-router-link routerLink="/login">Inicia sesión aquí.</ion-router-link>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

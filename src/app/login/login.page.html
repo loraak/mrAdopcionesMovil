@@ -1,0 +1,50 @@
+<ion-content class="login-content">
+  <div class="login-section">
+    <div class="login-container">
+
+      <div class="logo-container">
+        <img src="assets/icon/mrfresh.png" class="logo-img" alt="Logo Mr. Adopciones" />
+        <span class="logo-text">Mr Adopciones</span>
+      </div>
+
+      <div class="login-subtitle">¡Encuentra a tu compañero destinado!</div>
+      <h1 class="login-title">Iniciar Sesión</h1>
+
+      <form (ngSubmit)="onLogin()">
+        <ion-input
+          class="custom-input"
+          label="Usuario"
+          labelPlacement="floating"
+          fill="outline"
+          type="text"
+          [(ngModel)]="username"
+          name="username">
+          [required]="true"
+        </ion-input>
+
+        <ion-input
+          class="custom-input"
+          label="Contraseña"
+          labelPlacement="floating"
+          fill="outline"
+          type="password"
+          [(ngModel)]="password"
+          name="password">
+          [required]="true"
+        </ion-input>
+
+        <ion-button expand="block" type="submit" class="btn-primary">
+          Iniciar Sesión
+        </ion-button>
+      </form>
+
+      <div class="login-footer">
+        <p>
+          ¿No tienes una cuenta?
+          <ion-router-link routerLink="/register">¡Regístrate!</ion-router-link>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</ion-content>
