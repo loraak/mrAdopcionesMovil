@@ -1,0 +1,90 @@
+.profile-content {
+  --background: #f8f9fa;
+}
+
+.profile-header {
+  margin-top: 20px;
+
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color, #D81B60);
+    padding: 4px;
+    background: white;
+  }
+
+  .profile-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-dark, #4b5563);
+    margin: 10px 0 5px;
+  }
+
+  .role-badge {
+    display: inline-block;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+}
+
+.info-card {
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 15px;
+
+  h3 {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 4px 0 0;
+  }
+}
+
+.section-title h3 {
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-left: 10px;
+}
+
+/* Reutilizando el estilo de tarjetas de mascotas */
+.pet-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  .image-container {
+    height: 180px;
+    .pet-img { width: 100%; height: 100%; object-fit: cover; }
+  }
+
+  .pet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .pet-name { font-weight: 800; font-size: 1.2rem; }
+  }
+}
+
+.badge-pink {
+  background: rgba(216, 27, 96, 0.1);
+  color: var(--primary-color, #D81B60);
+  padding: 6px 12px;
+  font-weight: 700;
+  border-radius: 20px;
+}
+
+.btn-outline-pink {
+  --color: var(--primary-color);
+  --border-color: var(--primary-color);
+  --border-radius: 50px;
+  font-weight: 700;
+  margin-top: 10px;
+}
