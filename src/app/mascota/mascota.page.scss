@@ -1,0 +1,142 @@
+.manage-content {
+  --background: #f8f9fa;
+}
+
+.section-title h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-dark, #4b5563);
+}
+
+/* Tarjeta Idéntica al Catálogo */
+.pet-card {
+  --background: #ffffff;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 0 0 16px 0;
+  border: none;
+
+  .image-container {
+    height: 200px;
+    overflow: hidden;
+
+    .pet-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &:hover .pet-img {
+    transform: scale(1.04);
+  }
+
+  .pet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .pet-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-dark, #4b5563);
+    }
+  }
+
+  .badge-pink {
+    background: rgba(216, 27, 96, 0.1);
+    color: var(--primary-color, #D81B60);
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+
+  .pet-description {
+    color: var(--text-muted, #6c757d);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  /* Tags / Chips */
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    .custom-chip {
+      --color: var(--text-muted, #6c757d);
+      font-size: 0.75rem;
+      height: 26px;
+      margin: 0;
+    }
+  }
+
+  /* Selector de Estatus formato Badge */
+  .status-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .status-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted, #6c757d);
+    }
+
+    .badge-pink-select {
+      background: rgba(216, 27, 96, 0.1);
+      color: var(--primary-color, #D81B60);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      min-height: 32px;
+    }
+  }
+
+  .btn-outline-pink {
+    --color: var(--primary-color, #D81B60);
+    --border-color: var(--primary-color, #D81B60);
+    --border-radius: 50px;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+}
+
+.fab-pink {
+  --background: var(--primary-color, #D81B60);
+  --background-hover: var(--primary-hover, #AD1457);
+  --color: white;
+}
+
+/* Modal */
+.modal-content {
+  --background: #ffffff;
+
+  .modal-pet-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 3px solid var(--primary-color, #D81B60);
+  }
+
+  ion-input.custom-input,
+  ion-textarea.custom-input {
+    --border-radius: 12px;
+    --border-color: var(--border-light, #ced4da);
+    --highlight-color-focused: var(--primary-color, #D81B60);
+    --color: var(--text-dark, #4b5563);
+    margin-bottom: 16px;
+  }
+
+  .btn-primary {
+    --background: var(--primary-color, #D81B60);
+    --border-radius: 50px;
+    font-weight: 700;
+  }
+}

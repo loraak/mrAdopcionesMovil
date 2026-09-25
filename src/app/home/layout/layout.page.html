@@ -12,7 +12,7 @@
           <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
         </ion-button>
       } @else {
-        <ion-button routerLink="/login" color="light">
+        <ion-button class="white" routerLink="/login">
           Iniciar Sesión
         </ion-button>
       }
@@ -35,13 +35,8 @@
     <ion-label>Catálogo</ion-label>
   </ion-tab-button>
 
-  <ion-tab-button tab="about-us" routerLink="/app/about-us">
+  <ion-tab-button tab="about-us" routerLink="/app/nosotros">
     <ion-icon name="information-circle-outline"></ion-icon>
     <ion-label>Nosotros</ion-label>
-  </ion-tab-button>
-
-  <ion-tab-button tab="blog" routerLink="/app/blog">
-    <ion-icon name="newspaper-outline"></ion-icon>
-    <ion-label>Blog</ion-label>
   </ion-tab-button>
 </ion-tab-bar>

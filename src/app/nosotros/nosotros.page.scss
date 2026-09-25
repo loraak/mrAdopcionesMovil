@@ -1,0 +1,101 @@
+.about-content {
+  --background: #f8f9fa;
+}
+
+.section-title h2 {
+  font-weight: 800;
+  color: var(--text-dark, #4b5563);
+  font-size: 2rem;
+}
+
+.section-heading {
+  font-weight: 800;
+  color: var(--text-dark);
+  font-size: 1.2rem;
+  margin: 25px 0 15px 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tarjetas Generales */
+.custom-card {
+  --background: #ffffff;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin: 0 0 15px 0;
+
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+
+  ion-card-content {
+    color: var(--text-muted);
+  }
+}
+
+/* Tarjeta de Donación Rosa Clara */
+.donation-card {
+  --background: rgba(216, 27, 96, 0.05);
+  border: 1px solid rgba(216, 27, 96, 0.2);
+  border-radius: 16px;
+  box-shadow: none;
+
+  p { color: var(--text-dark); }
+
+  .account-info {
+    margin-top: 10px;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+
+/* Acordeón FAQ */
+.custom-accordion {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+  ion-accordion {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-light, #eee);
+  }
+
+  .fw-bold { font-weight: 600; color: var(--text-dark); }
+  .accordion-content { color: var(--text-muted); font-size: 0.95rem; }
+}
+
+/* Redes Sociales */
+.social-links {
+  display: flex;
+  gap: 15px;
+  ion-icon { font-size: 2rem; }
+}
+
+/* Botón Formulario */
+.btn-primary {
+  --background: var(--primary-color, #D81B60);
+  --border-radius: 50px;
+  font-weight: 700;
+  margin-top: 15px;
+}
+
+.custom-accordion ion-accordion {
+  background: #ffffff;
+
+  ion-item[slot="header"] {
+    --background: #ffffff;
+    --background-expanded: #ffffff;
+    --color: var(--text-dark, #4b5563);
+  }
+}

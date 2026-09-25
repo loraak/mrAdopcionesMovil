@@ -8,7 +8,7 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    loadComponent: () => import('./register/register.page').then(m => m.RegisterPage)
+    loadComponent: () => import('./registro/registro.page').then(m => m.RegistroPage)
   },
   {
     path: 'app',
@@ -21,6 +21,18 @@ export const routes: Routes = [
       {
         path: 'catalogo',
         loadComponent: () => import('./catalogo/catalogo.page').then(m => m.CatalogoPage)
+      },
+      {
+        path: 'perfil',
+        loadComponent: () => import ('./perfil/perfil.page').then(m => m.PerfilPage)
+      },
+      {
+        path: 'nosotros',
+        loadComponent: () => import ('./nosotros/nosotros.page').then(m => m.NosotrosPage)
+      },
+      {
+        path: 'mascota',
+        loadComponent: () => import ('./mascota/mascota.page').then(m => m.MascotaPage)
       }
     ]
   }

@@ -1,0 +1,140 @@
+<ion-content class="manage-content ion-padding">
+
+  <!-- Migas de Pan -->
+  <ion-breadcrumbs class="custom-breadcrumbs ion-margin-bottom">
+    <ion-breadcrumb routerLink="/app/home">Inicio</ion-breadcrumb>
+    <ion-breadcrumb>Gestionar Adopciones</ion-breadcrumb>
+  </ion-breadcrumbs>
+
+  <div class="section-title ion-text-center ion-margin-bottom">
+    <h2>Gestionar Adopciones</h2>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      @for (pet of myPets; track pet.id) {
+        <ion-col size="12" size-md="6" size-lg="4">
+
+          <ion-card class="pet-card">
+            <!-- Contenedor de Imagen -->
+            <div class="image-container">
+              <img [src]="pet.imageUrl" [alt]="pet.name" class="pet-img" />
+            </div>
+
+            <!-- Encabezado con Nombre y Edad -->
+            <ion-card-header>
+              <div class="pet-header">
+                <ion-card-title class="pet-name">{{ pet.name }}</ion-card-title>
+                <ion-badge class="badge-pink">{{ pet.age }} años</ion-badge>
+              </div>
+            </ion-card-header>
+
+            <ion-card-content>
+              <p class="pet-description">{{ pet.description }}</p>
+
+              <!-- Etiquetas / Tags -->
+              <div class="tags-container ion-margin-vertical">
+                @for (tag of pet.tags; track tag) {
+                  <ion-chip outline="true" class="custom-chip">
+                    <ion-label>{{ tag }}</ion-label>
+                  </ion-chip>
+                }
+              </div>
+
+              <!-- Selector de Estatus estilizado como Badge -->
+              <div class="status-wrapper ion-margin-bottom">
+                <span class="status-label">Estatus:</span>
+                <ion-select
+                  [(ngModel)]="pet.status"
+                  (ionChange)="onStatusChange(pet)"
+                  interface="popover"
+                  class="badge-pink-select"
+                >
+                  <ion-select-option value="Disponible">Disponible</ion-select-option>
+                  <ion-select-option value="En proceso">En proceso</ion-select-option>
+                  <ion-select-option value="Adoptado">Adoptado</ion-select-option>
+                </ion-select>
+              </div>
+
+              <!-- Botón Único de Acción -->
+              <ion-button expand="block" fill="outline" class="btn-outline-pink" (click)="openEditModal(pet)">
+                <ion-icon name="create-outline" slot="start"></ion-icon>
+                Editar Perfil
+              </ion-button>
+            </ion-card-content>
+
+          </ion-card>
+        </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+
+  <!-- Botón Flotante para Subir Nueva Mascota -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="fab-pink" (click)="addPet()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Modal de Edición -->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="light">
+          <ion-title color="primary">Editar Mascota</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()" color="medium">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding modal-content">
+        @if (selectedPet) {
+          <form (ngSubmit)="savePetChanges()">
+            <div class="image-preview ion-text-center ion-margin-bottom">
+              <img [src]="selectedPet.imageUrl" [alt]="selectedPet.name" class="modal-pet-img" />
+            </div>
+
+            <ion-input
+              class="custom-input"
+              label="Nombre de la Mascota"
+              labelPlacement="floating"
+              fill="outline"
+              type="text"
+              [(ngModel)]="selectedPet.name"
+              name="name"
+              [required]="true"
+            ></ion-input>
+
+            <ion-input
+              class="custom-input"
+              label="Edad (Años)"
+              labelPlacement="floating"
+              fill="outline"
+              type="number"
+              [(ngModel)]="selectedPet.age"
+              name="age"
+              [required]="true"
+            ></ion-input>
+
+            <ion-textarea
+              class="custom-input"
+              label="Descripción"
+              labelPlacement="floating"
+              fill="outline"
+              rows="3"
+              [(ngModel)]="selectedPet.description"
+              name="description"
+              [required]="true"
+            ></ion-textarea>
+
+            <ion-button expand="block" type="submit" class="btn-primary ion-margin-top">
+              Guardar Cambios
+            </ion-button>
+          </form>
+        }
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

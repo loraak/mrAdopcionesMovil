@@ -32,21 +32,29 @@
 }
 
 .info-card {
+  --background: #ffffff;
+  background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   margin-bottom: 15px;
 
+  ion-item {
+    --background: transparent;
+    --color: var(--text-dark, #4b5563);
+  }
+
   h3 {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--text-muted, #6c757d);
     margin: 0;
   }
   p {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--text-dark);
+    color: var(--text-dark, #4b5563);
     margin: 4px 0 0;
   }
+
 }
 
 .section-title h3 {
@@ -55,10 +63,15 @@
   margin-left: 10px;
 }
 
-/* Reutilizando el estilo de tarjetas de mascotas */
 .pet-card {
+  --background: #ffffff;
+  background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  ion-card-title, .pet-name {
+    color: var(--text-dark, #4b5563);
+  }
 
   .image-container {
     height: 180px;

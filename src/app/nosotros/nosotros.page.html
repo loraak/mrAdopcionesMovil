@@ -1,0 +1,80 @@
+<ion-content class="about-content ion-padding">
+
+  <!-- Migas de Pan -->
+  <ion-breadcrumbs class="custom-breadcrumbs ion-margin-bottom">
+    <ion-breadcrumb routerLink="/app/home">Inicio</ion-breadcrumb>
+    <ion-breadcrumb>Sobre Nosotros</ion-breadcrumb>
+  </ion-breadcrumbs>
+
+  <div class="section-title ion-text-center ion-margin-bottom">
+    <h2>Sobre Nosotros</h2>
+  </div>
+
+  <!-- Donaciones -->
+  <h3 class="section-heading"><ion-icon name="heart" color="danger"></ion-icon> Donaciones</h3>
+  <ion-card class="donation-card ion-margin-bottom">
+    <ion-card-content>
+      <p>Tu apoyo es vital para medicinas, alimento y cirugías de emergencia.</p>
+      <div class="account-info">
+        <p><strong>Cuenta Bancaria:</strong> 1234 5678 9012</p>
+        <p><strong>PayPal:</strong> donaciones&#64;mradopciones.com</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Preguntas Frecuentes (Accordion Nativo de Ionic) -->
+  <h3 class="section-heading"><ion-icon name="help-circle"></ion-icon> Preguntas Frecuentes</h3>
+  <ion-accordion-group class="custom-accordion ion-margin-bottom">
+    <ion-accordion value="q1">
+      <ion-item slot="header" class="light-back">
+        <ion-label class="fw-bold">¿Cuáles son los requisitos de adopción?</ion-label>
+      </ion-item>
+      <div class="ion-padding accordion-content" slot="content">
+        Ser mayor de edad, presentar comprobante de domicilio y completar el formulario de responsabilidad.
+      </div>
+    </ion-accordion>
+
+    <ion-accordion value="q2">
+      <ion-item slot="header">
+        <ion-label class="fw-bold">¿Tiene algún costo?</ion-label>
+      </ion-item>
+      <div class="ion-padding accordion-content" slot="content">
+        La adopción es gratuita, pero aceptamos donaciones voluntarias para seguir rescatando.
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
+  <!-- Contáctanos (Info y Formulario) -->
+  <h3 class="section-heading"><ion-icon name="mail" color="success"></ion-icon> Contáctanos</h3>
+
+  <ion-card class="custom-card ion-margin-bottom">
+    <ion-card-header>
+      <ion-card-title><ion-icon name="call" color="primary"></ion-icon> Ayuda y Redes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Teléfono:</strong> +52 442 123 4567</p>
+      <p><strong>Email:</strong> contacto&#64;mradopciones.com</p>
+
+      <div class="social-links ion-margin-top">
+        <a href="https://www.facebook.com/Uteq.edu.mx" target="_blank"><ion-icon name="logo-facebook" color="primary"></ion-icon></a>
+        <a href="https://www.instagram.com/chekito2720/" target="_blank"><ion-icon name="logo-instagram" color="danger"></ion-icon></a>
+        <a href="https://x.com/daily_kakyoin" target="_blank"><ion-icon name="logo-twitter" color="info"></ion-icon></a>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="custom-card">
+    <ion-card-header>
+      <ion-card-title><ion-icon name="paper-plane" color="primary"></ion-icon> Buzón de Mensajes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form>
+        <ion-input label="Nombre" labelPlacement="floating" fill="outline" class="ion-margin-bottom light-back" [required]="true"></ion-input>
+        <ion-input label="Correo" type="email" labelPlacement="floating" fill="outline" class="ion-margin-bottom" [required]="true"></ion-input>
+        <ion-input label="Asunto" labelPlacement="floating" fill="outline" class="ion-margin-bottom" [required]="true"></ion-input>
+        <ion-textarea label="Mensaje" labelPlacement="floating" fill="outline" class="ion-margin-bottom" [required]="true"></ion-textarea>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

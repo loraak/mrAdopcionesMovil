@@ -14,7 +14,7 @@ import {
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.page.html',
+  templateUrl: './registro.page.html',
   styleUrls: ['../login/login.page.scss'],
   standalone: true,
   imports: [
@@ -30,7 +30,7 @@ import {
     IonLabel
   ]
 })
-export class RegisterPage {
+export class RegistroPage {
   // Rol seleccionado por defecto
   role: 'ADOPTANTE' | 'DONANTE' = 'ADOPTANTE';
 

@@ -3,14 +3,14 @@ import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardContent,
   IonItem, IonIcon, IonLabel, IonGrid, IonRow, IonCol, IonCardHeader,
   IonCardTitle, IonBadge, IonButton
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { mailOutline, callOutline, locationOutline, businessOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  templateUrl: './perfil.page.html',
+  styleUrls: ['./perfil.page.scss'],
   standalone: true,
   imports: [
     IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardContent,
@@ -18,7 +18,7 @@ import { mailOutline, callOutline, locationOutline, businessOutline } from 'ioni
     IonCardTitle, IonBadge, IonButton
   ]
 })
-export class ProfilePage {
+export class PerfilPage {
   // Cambia el rol a 'ADOPTANTE' para ver cómo se oculta la sección inferior
   user = {
     name: 'Karol Vázquez',
@@ -28,11 +28,6 @@ export class ProfilePage {
     location: 'Querétaro, Qro.',
     organization: 'Refugio Esperanza'
   };
-
-  myPets = [
-    { id: 1, name: 'Firulais', imageUrl: 'assets/img/quemiedo.jpg', status: 'Buscando hogar' },
-    { id: 2, name: 'Michi', imageUrl: 'assets/img/floppa.jpg', status: 'En proceso' }
-  ];
 
   constructor() {
     addIcons({ mailOutline, callOutline, locationOutline, businessOutline });
