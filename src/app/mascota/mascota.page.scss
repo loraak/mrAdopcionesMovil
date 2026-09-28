@@ -8,7 +8,6 @@
   color: var(--text-dark, #4b5563);
 }
 
-/* Tarjeta Idéntica al Catálogo */
 .pet-card {
   --background: #ffffff;
   background: #ffffff;
@@ -54,6 +53,17 @@
     font-weight: 700;
   }
 
+  /* Estilo del texto de Estatus en la tarjeta */
+  .pet-status-text {
+    font-size: 0.9rem;
+    color: var(--text-dark, #4b5563);
+    margin: 4px 0 8px 0;
+
+    strong {
+      color: var(--text-dark, #4b5563);
+    }
+  }
+
   .pet-description {
     color: var(--text-muted, #6c757d);
     font-size: 0.9rem;
@@ -61,7 +71,6 @@
     margin-bottom: 8px;
   }
 
-  /* Tags / Chips */
   .tags-container {
     display: flex;
     flex-wrap: wrap;
@@ -72,29 +81,6 @@
       font-size: 0.75rem;
       height: 26px;
       margin: 0;
-    }
-  }
-
-  /* Selector de Estatus formato Badge */
-  .status-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .status-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted, #6c757d);
-    }
-
-    .badge-pink-select {
-      background: rgba(216, 27, 96, 0.1);
-      color: var(--primary-color, #D81B60);
-      border-radius: 20px;
-      padding: 2px 10px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      min-height: 32px;
     }
   }
 
@@ -126,7 +112,8 @@
   }
 
   ion-input.custom-input,
-  ion-textarea.custom-input {
+  ion-textarea.custom-input,
+  ion-select.custom-select-modal {
     --border-radius: 12px;
     --border-color: var(--border-light, #ced4da);
     --highlight-color-focused: var(--primary-color, #D81B60);
@@ -139,4 +126,14 @@
     --border-radius: 50px;
     font-weight: 700;
   }
+}
+
+ion-select.custom-select-modal {
+  --background: #ffffff;
+  --color: var(--text-dark, #4b5563);
+  --border-radius: 12px;
+  --border-color: var(--border-light, #ced4da);
+  --highlight-color-focused: var(--primary-color, #D81B60);
+  background: #ffffff;
+  margin-bottom: 16px;
 }

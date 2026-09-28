@@ -33,6 +33,10 @@ export const routes: Routes = [
       {
         path: 'mascota',
         loadComponent: () => import ('./mascota/mascota.page').then(m => m.MascotaPage)
+      },
+      {
+        path: 'solicitud-adopcion',
+        loadComponent: () => import ('./solicitud-adopcion/solicitud-adopcion.page').then(m => m.SolicitudAdopcionPage)
       }
     ]
   }

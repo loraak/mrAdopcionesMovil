@@ -1,0 +1,83 @@
+<ion-content class="requests-content ion-padding">
+
+  <!-- Migas de Pan -->
+  <ion-breadcrumbs class="custom-breadcrumbs ion-margin-bottom">
+    <ion-breadcrumb routerLink="/app/home">Inicio</ion-breadcrumb>
+    <ion-breadcrumb>Solicitudes Recibidas</ion-breadcrumb>
+  </ion-breadcrumbs>
+
+  <div class="section-title ion-text-center ion-margin-bottom">
+    <h2>Solicitudes de Adopción</h2>
+    <p>Revisa y gestiona las solicitudes de las familias interesadas.</p>
+  </div>
+
+  <!-- Lista de Solicitudes -->
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      @for (req of requests; track req.id) {
+        <ion-col size="12" size-md="6">
+          <ion-card class="request-card">
+
+            <ion-card-header>
+              <div class="request-header">
+                <div>
+                  <ion-card-title class="applicant-name">{{ req.applicantName }}</ion-card-title>
+                  <p class="pet-target">Interesado/a en: <strong>{{ req.petName }}</strong></p>
+                </div>
+                <span class="status-badge" [class]="req.status.toLowerCase().replace(' ', '-')">
+                  {{ req.status }}
+                </span>
+              </div>
+            </ion-card-header>
+
+            <ion-card-content>
+              <!-- Info del Solicitante -->
+              <div class="applicant-info ion-margin-bottom">
+                <p><ion-icon name="mail-outline"></ion-icon> {{ req.email }}</p>
+                <p><ion-icon name="call-outline"></ion-icon> {{ req.phone }}</p>
+                <p><ion-icon name="location-outline"></ion-icon> {{ req.location }}</p>
+              </div>
+
+              <!-- Mensaje/Motivo -->
+              <div class="message-box ion-margin-bottom">
+                <p class="message-title">Mensaje del adoptante:</p>
+                <p class="message-text">"{{ req.message }}"</p>
+              </div>
+
+              <!-- Botones de Acción (Solo si está pendiente) -->
+              @if (req.status === 'Pendiente') {
+                <div class="action-buttons">
+                  <ion-button
+                    expand="block"
+                    class="btn-accept"
+                    (click)="updateStatus(req, 'Aceptada')"
+                  >
+                    <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+                    Aceptar
+                  </ion-button>
+
+                  <ion-button
+                    expand="block"
+                    fill="outline"
+                    color="danger"
+                    class="btn-reject"
+                    (click)="updateStatus(req, 'Rechazada')"
+                  >
+                    <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+                    Rechazar
+                  </ion-button>
+                </div>
+              }
+            </ion-card-content>
+
+          </ion-card>
+        </ion-col>
+      } @empty {
+        <ion-col size="12" class="ion-text-center ion-padding">
+          <p class="empty-message">No tienes solicitudes pendientes por el momento.</p>
+        </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

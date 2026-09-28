@@ -16,7 +16,7 @@
         <ion-col size="12" size-md="6" size-lg="4">
 
           <ion-card class="pet-card">
-            <!-- Contenedor de Imagen -->
+            <!-- Imagen -->
             <div class="image-container">
               <img [src]="pet.imageUrl" [alt]="pet.name" class="pet-img" />
             </div>
@@ -30,9 +30,14 @@
             </ion-card-header>
 
             <ion-card-content>
+              <!-- Estatus con texto normal -->
+              <p class="pet-status-text">
+                <strong>Estatus:</strong> {{ pet.status }}
+              </p>
+
               <p class="pet-description">{{ pet.description }}</p>
 
-              <!-- Etiquetas / Tags -->
+              <!-- Tags / Chips -->
               <div class="tags-container ion-margin-vertical">
                 @for (tag of pet.tags; track tag) {
                   <ion-chip outline="true" class="custom-chip">
@@ -41,22 +46,7 @@
                 }
               </div>
 
-              <!-- Selector de Estatus estilizado como Badge -->
-              <div class="status-wrapper ion-margin-bottom">
-                <span class="status-label">Estatus:</span>
-                <ion-select
-                  [(ngModel)]="pet.status"
-                  (ionChange)="onStatusChange(pet)"
-                  interface="popover"
-                  class="badge-pink-select"
-                >
-                  <ion-select-option value="Disponible">Disponible</ion-select-option>
-                  <ion-select-option value="En proceso">En proceso</ion-select-option>
-                  <ion-select-option value="Adoptado">Adoptado</ion-select-option>
-                </ion-select>
-              </div>
-
-              <!-- Botón Único de Acción -->
+              <!-- Botón para Abrir Modal (Editar Perfil y Estatus) -->
               <ion-button expand="block" fill="outline" class="btn-outline-pink" (click)="openEditModal(pet)">
                 <ion-icon name="create-outline" slot="start"></ion-icon>
                 Editar Perfil
@@ -76,18 +66,9 @@
     </ion-fab-button>
   </ion-fab>
 
-  <!-- Modal de Edición -->
+  <!-- Modal de Edición (Incluye Estatus) -->
   <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
     <ng-template>
-      <ion-header>
-        <ion-toolbar color="light">
-          <ion-title color="primary">Editar Mascota</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="closeModal()" color="medium">Cerrar</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-
       <ion-content class="ion-padding modal-content">
         @if (selectedPet) {
           <form (ngSubmit)="savePetChanges()">
@@ -117,12 +98,25 @@
               [required]="true"
             ></ion-input>
 
+            <ion-select
+              class="custom-input custom-select-modal"
+              label="Estatus de Adopción"
+              labelPlacement="floating"
+              fill="outline"
+              [(ngModel)]="selectedPet.status"
+              name="status"
+              interface="popover"
+            >
+              <ion-select-option value="Disponible">Disponible</ion-select-option>
+              <ion-select-option value="En proceso">En proceso</ion-select-option>
+              <ion-select-option value="Adoptado">Adoptado</ion-select-option>
+            </ion-select>
+
             <ion-textarea
               class="custom-input"
               label="Descripción"
               labelPlacement="floating"
               fill="outline"
-              rows="3"
               [(ngModel)]="selectedPet.description"
               name="description"
               [required]="true"
