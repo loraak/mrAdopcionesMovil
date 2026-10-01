@@ -43,7 +43,7 @@
   }
 }
 
-/* Tarjeta de Donación Rosa Clara */
+/* Tarjeta Rosa Clara */
 .donation-card {
   --background: rgba(216, 27, 96, 0.05);
   border: 1px solid rgba(216, 27, 96, 0.2);
@@ -60,7 +60,7 @@
   }
 }
 
-/* Acordeón FAQ */
+/* FAQ */
 .custom-accordion {
   border-radius: 16px;
   overflow: hidden;
@@ -80,14 +80,6 @@
   display: flex;
   gap: 15px;
   ion-icon { font-size: 2rem; }
-}
-
-/* Botón Formulario */
-.btn-primary {
-  --background: var(--primary-color, #D81B60);
-  --border-radius: 50px;
-  font-weight: 700;
-  margin-top: 15px;
 }
 
 .custom-accordion ion-accordion {
