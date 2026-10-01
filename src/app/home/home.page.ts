@@ -1,29 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonButton,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonIcon,
-  IonList,
-  IonItem,
-  IonLabel
-} from '@ionic/angular';
-import { addIcons } from 'ionicons';
-import {
-  paw,
-  home,
-  people,
-  informationCircleOutline,
-  newspaperOutline,
-  personOutline
-} from 'ionicons/icons';
+import {Component} from '@angular/core';
+import {IonCard, IonCol, IonContent, IonGrid, IonIcon, IonRow} from '@ionic/angular';
+import {addIcons} from 'ionicons';
+import {home, informationCircleOutline, newspaperOutline, paw, people, personOutline} from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -31,20 +9,12 @@ import {
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [
-    RouterLink,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
-    IonButton,
     IonGrid,
     IonRow,
     IonCol,
     IonCard,
-    IonIcon,
-    IonList,
-    IonItem,
-    IonLabel
+    IonIcon
   ]
 })
 export class HomePage {

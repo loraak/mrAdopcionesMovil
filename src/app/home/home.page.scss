@@ -21,27 +21,6 @@
     font-size: 0.95rem;
     line-height: 1.4;
   }
-
-  .hero-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-  }
-}
-
-.btn-primary {
-  --background: var(--primary-color);
-  --background-hover: var(--primary-hover);
-  --border-radius: 50px;
-  font-weight: 700;
-}
-
-.btn-outline {
-  --color: var(--primary-color);
-  --border-color: var(--primary-color);
-  --border-radius: 50px;
-  font-weight: 700;
 }
 
 /* Estadísticas */
@@ -116,20 +95,6 @@
       margin: 2px 0 0 0;
       opacity: 0.85;
     }
-  }
-}
-
-.quick-links {
-  --background: #ffffff;
-  background: #ffffff;
-  border-radius: 12px;
-
-  ion-item {
-    --background: #ffffff;
-    --color: var(--text-dark, #4b5563);
-
-    --background-hover: #f8f9fa;
-    --background-activated: #f1f5f9;
   }
 }
 
