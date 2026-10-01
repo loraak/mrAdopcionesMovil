@@ -1,6 +1,6 @@
 <ion-content class="catalog-content ion-padding">
 
-  <!-- migajas -->
+  <!-- Migajas -->
   <ion-breadcrumbs class="custom-breadcrumbs ion-margin-bottom">
     <ion-breadcrumb routerLink="/app/home">Inicio</ion-breadcrumb>
     <ion-breadcrumb routerLink="/app/catalog">Catálogo</ion-breadcrumb>
@@ -15,7 +15,7 @@
     <p class="catalog-subtitle">Encuentra a tu nuevo mejor amigo entre nuestros rescatados</p>
   </div>
 
-  <!-- Filtro por Categoría (Segment) -->
+  <!-- Filtro por categoría -->
   <ion-segment [(ngModel)]="selectedCategory" (ionChange)="filterPets()" class="custom-segment ion-margin-bottom">
     <ion-segment-button value="todos">
       <ion-label>Todos</ion-label>
@@ -51,7 +51,7 @@
             <ion-card-content>
               <p class="pet-description">{{ pet.description }}</p>
 
-              <!-- Tags / Etiquetas -->
+              <!-- Etiquetas -->
               <div class="tags-container ion-margin-vertical">
                 @for (tag of pet.tags; track tag) {
                   <ion-chip outline="true" class="custom-chip">
@@ -60,7 +60,7 @@
                 }
               </div>
 
-              <!-- Botón de Acción -->
+              <!-- Botón -->
               <ion-button
                 expand="block"
                 [routerLink]="['/app/pet', pet.id]"
