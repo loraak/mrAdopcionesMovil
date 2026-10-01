@@ -2,10 +2,15 @@
   --background: #f8f9fa;
 }
 
-.section-title h2 {
-  font-size: 1.8rem;
+.catalog-content {
+  --background: #f8f9fa;
+}
+
+.catalog-title {
+  font-size: 2rem;
   font-weight: 800;
   color: var(--text-dark, #4b5563);
+  margin-bottom: 4px;
 }
 
 .pet-card {
@@ -53,7 +58,7 @@
     font-weight: 700;
   }
 
-  /* Estilo del texto de Estatus en la tarjeta */
+  /* Estilo de estatus */
   .pet-status-text {
     font-size: 0.9rem;
     color: var(--text-dark, #4b5563);
@@ -136,4 +141,18 @@ ion-select.custom-select-modal {
   --highlight-color-focused: var(--primary-color, #D81B60);
   background: #ffffff;
   margin-bottom: 16px;
+}
+
+.modal-toolbar {
+  --background: var(--primary-color, #D81B60);
+  --color: #ffffff;
+
+  ion-title {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .close-btn {
+    --color: #ffffff;
+  }
 }

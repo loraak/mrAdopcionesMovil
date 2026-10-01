@@ -1,14 +1,13 @@
 <ion-content class="manage-content ion-padding">
 
-  <!-- Migas de Pan -->
+  <!-- Migajas -->
   <ion-breadcrumbs class="custom-breadcrumbs ion-margin-bottom">
     <ion-breadcrumb routerLink="/app/home">Inicio</ion-breadcrumb>
-    <ion-breadcrumb>Gestionar Adopciones</ion-breadcrumb>
+    <ion-breadcrumb>Solicitudes Recibidas</ion-breadcrumb>
   </ion-breadcrumbs>
 
   <div class="header-section ion-text-center ion-margin-bottom">
-    <h1 class="catalog-title">Catálogo de Mascotas</h1>
-    <p class="catalog-subtitle">Encuentra a tu nuevo mejor amigo entre nuestros rescatados</p>
+    <h1 class="catalog-title">Manejo de mascotas</h1>
   </div>
 
   <ion-grid>
@@ -22,7 +21,7 @@
               <img [src]="pet.imageUrl" [alt]="pet.name" class="pet-img" />
             </div>
 
-            <!-- Encabezado con Nombre y Edad -->
+            <!-- Encabezado -->
             <ion-card-header>
               <div class="pet-header">
                 <ion-card-title class="pet-name">{{ pet.name }}</ion-card-title>
@@ -31,14 +30,14 @@
             </ion-card-header>
 
             <ion-card-content>
-              <!-- Estatus con texto normal -->
+              <!-- Estatus -->
               <p class="pet-status-text">
                 <strong>Estatus:</strong> {{ pet.status }}
               </p>
 
               <p class="pet-description">{{ pet.description }}</p>
 
-              <!-- Tags / Chips -->
+              <!-- Tags -->
               <div class="tags-container ion-margin-vertical">
                 @for (tag of pet.tags; track tag) {
                   <ion-chip outline="true" class="custom-chip">
@@ -47,7 +46,7 @@
                 }
               </div>
 
-              <!-- Botón para Abrir Modal (Editar Perfil y Estatus) -->
+              <!-- Botón para Abrir Modal -->
               <ion-button expand="block" fill="outline" class="btn-outline-pink" (click)="openEditModal(pet)">
                 <ion-icon name="create-outline" slot="start"></ion-icon>
                 Editar Perfil
@@ -60,7 +59,7 @@
     </ion-row>
   </ion-grid>
 
-  <!-- Botón Flotante para Subir Nueva Mascota -->
+  <!-- Botón Flotante -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button class="fab-pink" (click)="addPet()">
       <ion-icon name="add"></ion-icon>
@@ -70,6 +69,17 @@
   <!-- Modal de Edición (Incluye Estatus) -->
   <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
     <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar class="modal-toolbar">
+          <ion-title>Editar</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()" class="close-btn">
+              <ion-icon name="close" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
       <ion-content class="ion-padding modal-content">
         @if (selectedPet) {
           <form (ngSubmit)="savePetChanges()">

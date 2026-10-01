@@ -8,7 +8,8 @@ import {
   IonBadge, IonCardHeader, IonCardTitle, IonChip
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { addCircle, createOutline, add } from 'ionicons/icons';
+import { addCircle, createOutline, add, close } from 'ionicons/icons';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-manage-pets',
@@ -17,7 +18,7 @@ import { addCircle, createOutline, add } from 'ionicons/icons';
   standalone: true,
   imports: [
     CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent,
-    IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonItem, IonLabel,
+    IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonItem, IonLabel, RouterLink,
     IonSelect, IonSelectOption, IonButton, IonIcon, IonFab, IonFabButton,
     IonButtons, IonModal, IonInput, IonTextarea, IonBreadcrumb, IonBreadcrumbs, IonBadge, IonCardHeader, IonCardTitle, IonChip
   ]
@@ -48,7 +49,7 @@ export class MascotaPage {
   selectedPet: any = null;
 
   constructor() {
-    addIcons({ addCircle, createOutline, add });
+    addIcons({ addCircle, createOutline, add, close });
   }
 
   addPet() {
