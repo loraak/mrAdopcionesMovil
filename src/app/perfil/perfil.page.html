@@ -1,13 +1,13 @@
 <ion-content class="profile-content ion-padding">
 
-  <!-- Encabezado del Perfil -->
+  <!-- Encabezado -->
   <div class="profile-header ion-text-center ion-margin-bottom">
     <img src="assets/img/gatotriste.png" alt="Avatar" class="profile-avatar" />
     <h2 class="profile-name">{{ user.name }}</h2>
     <span class="badge-pink role-badge">{{ user.role }}</span>
   </div>
 
-  <!-- Información General (Ambos Roles) -->
+  <!-- Información General -->
   <ion-card class="info-card">
     <ion-card-content>
       <ion-item lines="none">
@@ -27,7 +27,7 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Información y Catálogo Exclusivo para DONANTES -->
+  <!-- Información DONANTES -->
   @if (user.role === 'DONANTE') {
 
   <!-- Info Extra -->
