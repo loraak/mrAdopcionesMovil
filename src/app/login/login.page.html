@@ -13,14 +13,14 @@
       <form (ngSubmit)="onLogin()">
         <ion-input
           class="custom-input"
-          label="Usuario"
+          label="Usuario o correo"
           labelPlacement="floating"
           fill="outline"
           type="text"
           [(ngModel)]="username"
-          name="username">
+          name="username"
           [required]="true"
-        </ion-input>
+        ></ion-input>
 
         <ion-input
           class="custom-input"
@@ -28,13 +28,19 @@
           labelPlacement="floating"
           fill="outline"
           type="password"
-          [(ngModel)]="password"
-          name="password">
+          [(ngModel)]="contrasena"
+          name="password"
           [required]="true"
-        </ion-input>
+        ></ion-input>
 
-        <ion-button expand="block" type="submit" class="btn-primary">
-          Iniciar Sesión
+        @if (errorMessage) {
+          <p style="color: var(--ion-color-danger); text-align: center; margin: 8px 0;">
+            {{ errorMessage }}
+          </p>
+        }
+
+        <ion-button expand="block" type="submit" class="btn-primary" [disabled]="loading">
+          {{ loading ? 'Entrando...' : 'Iniciar Sesión' }}
         </ion-button>
       </form>
 

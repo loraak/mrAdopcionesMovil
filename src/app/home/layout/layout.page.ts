@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {Component, inject} from '@angular/core';
+import {Router, RouterLink} from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -11,10 +11,14 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonLabel
+  IonLabel,
+  IonPopover,
+  IonList,
+  IonItem
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { logOutOutline, homeOutline, pawOutline, informationCircleOutline, newspaperOutline } from 'ionicons/icons';
+import { logOutOutline, homeOutline, pawOutline, informationCircleOutline, newspaperOutline, personCircleOutline, personOutline } from 'ionicons/icons';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-main-layout',
@@ -33,17 +37,28 @@ import { logOutOutline, homeOutline, pawOutline, informationCircleOutline, newsp
     IonRouterOutlet,
     IonTabBar,
     IonTabButton,
-    IonLabel
+    IonLabel,
+    IonPopover,
+    IonList,
+    IonItem
   ]
 })
 export class MainLayoutPage {
-  isLoggedIn = false;
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
   constructor() {
-    addIcons({ logOutOutline, homeOutline, pawOutline, informationCircleOutline, newspaperOutline });
+    addIcons({
+      logOutOutline, homeOutline, pawOutline, informationCircleOutline, newspaperOutline, personCircleOutline, personOutline
+    });
   }
 
+  get isLoggedIn() { return this.auth.isLoggedIn(); }
+  get username() { return this.auth.currentUser()?.username ?? ''; }
+  get rolLabel() { return this.auth.currentUser()?.rol === 'DONANTE' ? 'Donante': 'Adoptante'; }
+
   logout() {
-    this.isLoggedIn = false;
+    this.auth.logout();
+    this.router.navigateByUrl('/app/home');
   }
 }
