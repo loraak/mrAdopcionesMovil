@@ -12,7 +12,7 @@
       <h1 class="login-title">Crear Cuenta</h1>
 
       <!-- Tipo de usuario -->
-      <ion-segment [(ngModel)]="role" class="custom-segment">
+      <ion-segment [(ngModel)]="rol" class="custom-segment">
         <ion-segment-button value="ADOPTANTE">
           <ion-label>Quiero adoptar</ion-label>
         </ion-segment-button>
@@ -42,7 +42,7 @@
           labelPlacement="floating"
           fill="outline"
           type="email"
-          [(ngModel)]="email"
+          [(ngModel)]="correo"
           name="email"
           [required]="true"
         ></ion-input>
@@ -53,12 +53,12 @@
           labelPlacement="floating"
           fill="outline"
           type="password"
-          [(ngModel)]="password"
+          [(ngModel)]="contrasena"
           name="password"
           [required]="true"
         ></ion-input>
 
-        @if (role === 'ADOPTANTE') {
+        @if (rol === 'ADOPTANTE') {
           <div>
             <ion-input
               class="custom-input"
@@ -66,14 +66,27 @@
               labelPlacement="floating"
               fill="outline"
               type="tel"
-              [(ngModel)]="phone"
+              [(ngModel)]="telefono"
               name="phone"
+              [required]="true"
+            ></ion-input>
+          </div>
+
+          <div>
+            <ion-input
+              class="custom-input"
+              label="Ocupación"
+              labelPlacement="floating"
+              fill="outline"
+              type="tel"
+              [(ngModel)]="ocupacion"
+              name="ocupation"
               [required]="true"
             ></ion-input>
           </div>
         }
 
-        @if (role === 'DONANTE') {
+        @if (rol === 'DONANTE') {
           <div>
             <ion-input
               class="custom-input"
@@ -81,7 +94,7 @@
               labelPlacement="floating"
               fill="outline"
               type="text"
-              [(ngModel)]="location"
+              [(ngModel)]="locacion"
               name="location"
             ></ion-input>
             <ion-input
@@ -90,7 +103,7 @@
               labelPlacement="floating"
               fill="outline"
               type="text"
-              [(ngModel)]="organization"
+              [(ngModel)]="organizacion"
               name="organization"
             ></ion-input>
           </div>

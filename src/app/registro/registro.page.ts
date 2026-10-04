@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {
   IonContent,
   IonInput,
@@ -9,8 +9,9 @@ import {
   IonRouterLink,
   IonSegment,
   IonSegmentButton,
-  IonLabel
+  IonLabel, ToastController
 } from '@ionic/angular';
+import {AuthService, RegistroRequest, Rol} from "../services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -31,33 +32,57 @@ import {
   ]
 })
 export class RegistroPage {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private toastCtrl = inject(ToastController)
   // Rol seleccionado por defecto
-  role: 'ADOPTANTE' | 'DONANTE' = 'ADOPTANTE';
+  rol: Rol = 'ADOPTANTE';
 
-  // Datos comunes
   username = '';
-  email = '';
-  password = '';
+  correo = '';
+  contrasena = '';
 
-  // Datos de Adoptante
-  phone = '';
-  occupation = '';
+  telefono = '';
+  ocupacion = '';
 
-  // Datos de Donante
-  location = '';
-  organization = '';
+  locacion = '';
+  organizacion = '';
+
+  loading = false;
 
   onRegister() {
-    const payload = {
+    if (this.loading) return;
+
+    const payload: RegistroRequest = {
       username: this.username,
-      email: this.email,
-      password: this.password,
-      role: this.role,
-      ...(this.role === 'ADOPTANTE'
-        ? { phone: this.phone, occupation: this.occupation }
-        : { location: this.location, organization: this.organization })
+      correo: this.correo,
+      contrasena: this.contrasena,
+      rol: this.rol,
+      ...(this.rol === 'ADOPTANTE'
+          ? { telefono: this.telefono, ocupacion: this.ocupacion }
+          : { locacion: this.locacion, organizacion: this.organizacion })
     };
 
-    console.log('Datos enviados al Backend:', payload);
+    this.loading = true;
+    this.authService.registrar(payload).subscribe({
+      next: async() => {
+        this.loading = false;
+        await this.showToast('Cuenta creada :3 Ahora inicia sesión', 'success');
+        this.router.navigateByUrl('/login');
+      },
+      error: async(err) => {
+        this.loading = false;
+        const msg = err.status === 0
+          ? 'No se pudo conectar con el servidor'
+          : err.error?.message ?? 'Ocurrió un error...';
+        await this.showToast(msg, 'danger');
+      }
+    });
+  }
+
+  private async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastCtrl.create({message, color, duration: 3000, position: 'top'});
+    await toast.present();
   }
 }
+
