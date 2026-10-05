@@ -58,6 +58,19 @@
     <ion-label>Catálogo</ion-label>
   </ion-tab-button>
 
+  <!-- Solo para donantes -->
+  @if (isDonante) {
+    <ion-tab-button tab="my-pets" routerLink="/app/mascota">
+      <ion-icon name="heart-outline"></ion-icon>
+      <ion-label>Mis mascotas</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="requests" routerLink="/app/solicitud-adopcion">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <ion-label>Solicitudes</ion-label>
+    </ion-tab-button>
+  }
+
   <ion-tab-button tab="about-us" routerLink="/app/nosotros">
     <ion-icon name="information-circle-outline"></ion-icon>
     <ion-label>Nosotros</ion-label>

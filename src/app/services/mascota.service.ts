@@ -1,29 +1,41 @@
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
 import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { API_URL } from './auth.service';
+import {Mascota, MascotaRequest} from "../models/mascota.model";
 
-// decorador para hacer un servicio inyectable.
-// crea una instancia única de este servicio y la inyecta al componente que la pida.
-// root define que el servicio es un singleton
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class MascotaService {
-  private apiUrl = 'http://localhost:8080/api/pets';
+  private http = inject(HttpClient);
+  private readonly apiUrl = `${API_URL}/mascotas`;
 
-  // en vez de un constructor, se inyecta usando inject (xd)
-  private http: HttpClient = inject(HttpClient);
-
-  getMascotas(tipo?: string): Observable<any[]> {
-    const url = tipo && tipo !== 'todos' ? `${this.apiUrl}?type=${tipo}` : this.apiUrl;
-    return this.http.get<any[]>(url);
+  /** Catálogo público: el backend ya devuelve solo las disponibles. */
+  getMascotas(tipo?: string): Observable<Mascota[]> {
+    let params = new HttpParams();
+    if (tipo && tipo !== 'todos') {
+      params = params.set('tipo', tipo); // el backend espera "tipo", no "type"
+    }
+    return this.http.get<Mascota[]>(this.apiUrl, { params });
   }
 
-  getMascotasByDonante(donanteId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/donante/${donanteId}`);
+  getMascotaById(id: number): Observable<Mascota> {
+    return this.http.get<Mascota>(`${this.apiUrl}/${id}`);
   }
 
-  updateMascota(id: number, mascota: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, mascota);
+  /** Mascotas del donante con sesión iniciada (todos los estatus). */
+  getMisMascotas(): Observable<Mascota[]> {
+    return this.http.get<Mascota[]>(`${this.apiUrl}/mine`);
+  }
+
+  createMascota(mascota: MascotaRequest): Observable<Mascota> {
+    return this.http.post<Mascota>(this.apiUrl, mascota);
+  }
+
+  updateMascota(id: number, mascota: MascotaRequest): Observable<Mascota> {
+    return this.http.put<Mascota>(`${this.apiUrl}/${id}`, mascota);
+  }
+
+  deleteMascota(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

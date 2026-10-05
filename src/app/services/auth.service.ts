@@ -2,7 +2,7 @@ import {computed, inject, Injectable, signal} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 
-export const API_URL = 'http://localhost:8080/api';
+export const API_URL = 'http://192.168.100.183:8080/api';
 export type Rol = 'ADOPTANTE' | 'DONANTE';
 
 export interface RegistroRequest {

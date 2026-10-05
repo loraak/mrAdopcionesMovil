@@ -1,38 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonBreadcrumbs,
-  IonBreadcrumb,
-  IonSegment,
-  IonSegmentButton,
-  IonLabel,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonBadge,
-  IonChip,
-  IonButton
+  IonContent, IonBreadcrumbs, IonBreadcrumb, IonSegment, IonSegmentButton, IonLabel,
+  IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
+  IonBadge, IonChip, IonButton, IonSpinner
 } from '@ionic/angular';
-
-interface Pet {
-  id: number;
-  name: string;
-  age: number;
-  type: 'perros' | 'gatos' | 'otros';
-  description: string;
-  imageUrl: string;
-  tags: string[];
-}
+import { MascotaService } from '../services/mascota.service';
+import { Mascota } from '../models/mascota.model';
+import {resolverImagen} from "../services/imagen";
 
 @Component({
   selector: 'app-catalogo',
@@ -40,75 +18,47 @@ interface Pet {
   styleUrls: ['./catalogo.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    RouterLink,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonBreadcrumbs,
-    IonBreadcrumb,
-    IonSegment,
-    IonSegmentButton,
-    IonLabel,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonBadge,
-    IonChip,
-    IonButton
+    CommonModule, FormsModule, RouterLink,
+    IonContent, IonBreadcrumbs, IonBreadcrumb, IonSegment, IonSegmentButton, IonLabel,
+    IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
+    IonBadge, IonChip, IonButton, IonSpinner
   ]
 })
-export class CatalogoPage implements OnInit {
+export class CatalogoPage {
+  private mascotaService = inject(MascotaService);
+  private sub?: Subscription;
+
+  protected readonly imgSrc = resolverImagen;
+
   selectedCategory = 'todos';
 
-  // Datos simulados (mientras conectas tu Backend)
-  pets: Pet[] = [
-    {
-      id: 1,
-      name: 'Firulais',
-      age: 2,
-      type: 'perros',
-      description: 'Un perro muy alegre y sociable con otros animales.',
-      imageUrl: 'assets/img/quemiedo.jpg',
-      tags: ['Vacunado', 'Esterilizado', 'Juguetón']
-    },
-    {
-      id: 2,
-      name: 'Michi',
-      age: 1,
-      type: 'gatos',
-      description: 'Tranquilo y le encanta dormir bajo el sol.',
-      imageUrl: 'assets/img/floppa.jpg',
-      tags: ['Tranquilo', 'Hogar sin niños']
-    },
-    {
-      id: 3,
-      name: 'Ramon',
-      age: 3,
-      type: 'otros',
-      description: 'Un conejito rescatado muy curioso.',
-      imageUrl: 'assets/img/rata.jpg',
-      tags: ['Esterilizado', 'Poco espacio']
-    }
-  ];
+  filteredPets = signal<Mascota[]>([]);
+  loading = signal(false);
+  errorMessage = signal('');
 
-  filteredPets: Pet[] = [];
-
-  ngOnInit() {
+  ionViewWillEnter() {
     this.filterPets();
   }
 
   filterPets() {
-    if (this.selectedCategory === 'todos') {
-      this.filteredPets = this.pets;
-    } else {
-      this.filteredPets = this.pets.filter(p => p.type === this.selectedCategory);
-    }
+    this.sub?.unsubscribe();
+    this.loading.set(true);
+    this.errorMessage.set('');
+
+    this.sub = this.mascotaService.getMascotas(this.selectedCategory).subscribe({
+      next: (pets) => {
+        this.filteredPets.set(pets);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        this.filteredPets.set([]);
+        this.loading.set(false);
+        this.errorMessage.set(
+          err.status === 0
+            ? 'No se pudo conectar con el servidor'
+            : err.error?.message ?? 'No se pudo cargar el catálogo'
+        );
+      }
+    });
   }
 }

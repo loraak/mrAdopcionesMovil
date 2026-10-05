@@ -10,36 +10,48 @@
     <h1 class="catalog-title">Manejo de mascotas</h1>
   </div>
 
+  @if (loading()) {
+    <div class="ion-text-center ion-padding">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <p class="empty-message ion-text-center">{{ errorMessage() }}</p>
+  }
+
   <ion-grid>
     <ion-row>
-      @for (pet of myPets; track pet.id) {
+      @for (pet of myPets(); track pet.id) {
         <ion-col size="12" size-md="6" size-lg="4">
 
           <ion-card class="pet-card">
             <!-- Imagen -->
             <div class="image-container">
-              <img [src]="pet.imageUrl" [alt]="pet.name" class="pet-img" />
+              @if (pet.imagen) {
+                <img [src]="imgSrc(pet.imagen)" [alt]="pet.nombre" class="pet-img" />
+              }
             </div>
 
             <!-- Encabezado -->
             <ion-card-header>
               <div class="pet-header">
-                <ion-card-title class="pet-name">{{ pet.name }}</ion-card-title>
-                <ion-badge class="badge-pink">{{ pet.age }} años</ion-badge>
+                <ion-card-title class="pet-name">{{ pet.nombre }}</ion-card-title>
+                <ion-badge class="badge-pink">{{ pet.edad }} años</ion-badge>
               </div>
             </ion-card-header>
 
             <ion-card-content>
               <!-- Estatus -->
               <p class="pet-status-text">
-                <strong>Estatus:</strong> {{ pet.status }}
+                <strong>Estatus:</strong> {{ pet.estatus }}
               </p>
 
-              <p class="pet-description">{{ pet.description }}</p>
+              <p class="pet-description">{{ pet.descripcion }}</p>
 
               <!-- Tags -->
               <div class="tags-container ion-margin-vertical">
-                @for (tag of pet.tags; track tag) {
+                @for (tag of pet.etiquetas; track tag) {
                   <ion-chip outline="true" class="custom-chip">
                     <ion-label>{{ tag }}</ion-label>
                   </ion-chip>
@@ -55,6 +67,12 @@
 
           </ion-card>
         </ion-col>
+      } @empty {
+        @if (!loading() && !errorMessage()) {
+          <ion-col size="12" class="ion-text-center ion-padding">
+            <p class="empty-message">Aún no has publicado mascotas. Toca el botón + para agregar la primera.</p>
+          </ion-col>
+        }
       }
     </ion-row>
   </ion-grid>
@@ -66,12 +84,12 @@
     </ion-fab-button>
   </ion-fab>
 
-  <!-- Modal de Edición (Incluye Estatus) -->
-  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+  <!-- Modal para crear o editar -->
+  <ion-modal [isOpen]="isModalOpen()" (didDismiss)="closeModal()">
     <ng-template>
       <ion-header class="ion-no-border">
         <ion-toolbar class="modal-toolbar">
-          <ion-title>Editar</ion-title>
+          <ion-title>{{ isEditing ? 'Editar mascota' : 'Nueva mascota' }}</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="closeModal()" class="close-btn">
               <ion-icon name="close" slot="icon-only"></ion-icon>
@@ -83,8 +101,17 @@
       <ion-content class="ion-padding modal-content">
         @if (selectedPet) {
           <form (ngSubmit)="savePetChanges()">
+
+            <!-- Foto con la cámara -->
             <div class="image-preview ion-text-center ion-margin-bottom">
-              <img [src]="selectedPet.imageUrl" [alt]="selectedPet.name" class="modal-pet-img" />
+              @if (fotoPreview(); as preview) {
+                <img [src]="preview" alt="Foto de la mascota" class="modal-pet-img" />
+              }
+
+              <ion-button expand="block" fill="outline" class="btn-outline-pink" (click)="tomarFoto()">
+                <ion-icon name="camera-outline" slot="start"></ion-icon>
+                {{ fotoPreview() ? 'Cambiar foto' : 'Tomar foto' }}
+              </ion-button>
             </div>
 
             <ion-input
@@ -93,7 +120,7 @@
               labelPlacement="floating"
               fill="outline"
               type="text"
-              [(ngModel)]="selectedPet.name"
+              [(ngModel)]="selectedPet.nombre"
               name="name"
               [required]="true"
             ></ion-input>
@@ -104,17 +131,31 @@
               labelPlacement="floating"
               fill="outline"
               type="number"
-              [(ngModel)]="selectedPet.age"
+              [(ngModel)]="selectedPet.edad"
               name="age"
               [required]="true"
             ></ion-input>
 
             <ion-select
               class="custom-input custom-select-modal"
+              label="Tipo de mascota"
+              labelPlacement="floating"
+              fill="outline"
+              [(ngModel)]="selectedPet.tipo"
+              name="type"
+              interface="popover"
+            >
+              <ion-select-option value="perros">Perro</ion-select-option>
+              <ion-select-option value="gatos">Gato</ion-select-option>
+              <ion-select-option value="otros">Otro</ion-select-option>
+            </ion-select>
+
+            <ion-select
+              class="custom-input custom-select-modal"
               label="Estatus de Adopción"
               labelPlacement="floating"
               fill="outline"
-              [(ngModel)]="selectedPet.status"
+              [(ngModel)]="selectedPet.estatus"
               name="status"
               interface="popover"
             >
@@ -123,18 +164,29 @@
               <ion-select-option value="Adoptado">Adoptado</ion-select-option>
             </ion-select>
 
+            <!-- Texto separado por comas; la clase lo convierte en lista al guardar -->
+            <ion-input
+              class="custom-input"
+              label="Etiquetas (separadas por coma)"
+              labelPlacement="floating"
+              fill="outline"
+              type="text"
+              [(ngModel)]="selectedPet.etiquetas"
+              name="tagsText"
+            ></ion-input>
+
             <ion-textarea
               class="custom-input"
               label="Descripción"
               labelPlacement="floating"
               fill="outline"
-              [(ngModel)]="selectedPet.description"
+              [(ngModel)]="selectedPet.descripcion"
               name="description"
               [required]="true"
             ></ion-textarea>
 
-            <ion-button expand="block" type="submit" class="btn-primary ion-margin-top">
-              Guardar Cambios
+            <ion-button expand="block" type="submit" class="btn-primary ion-margin-top" [disabled]="saving()">
+              {{ saving() ? 'Guardando...' : (isEditing ? 'Guardar Cambios' : 'Publicar mascota') }}
             </ion-button>
           </form>
         }

@@ -3,7 +3,7 @@
   <!-- Migajas -->
   <ion-breadcrumbs class="custom-breadcrumbs ion-margin-bottom">
     <ion-breadcrumb routerLink="/app/home">Inicio</ion-breadcrumb>
-    <ion-breadcrumb routerLink="/app/catalog">Catálogo</ion-breadcrumb>
+    <ion-breadcrumb routerLink="/app/catalogo">Catálogo</ion-breadcrumb>
     @if (selectedCategory !== 'todos') {
       <ion-breadcrumb>{{ selectedCategory | titlecase }}</ion-breadcrumb>
     }
@@ -31,29 +31,41 @@
     </ion-segment-button>
   </ion-segment>
 
+  @if (loading()) {
+    <div class="ion-text-center ion-padding">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <p class="empty-message ion-text-center">{{ errorMessage() }}</p>
+  }
+
   <ion-grid>
     <ion-row>
-      @for (pet of filteredPets; track pet.id) {
+      @for (pet of filteredPets(); track pet.id) {
         <ion-col size="12" size-md="6" size-lg="4">
 
           <ion-card class="pet-card">
             <div class="image-container">
-              <img [src]="pet.imageUrl" [alt]="pet.name" class="pet-img" />
+              @if (pet.imagen) {
+                <img [src]="imgSrc(pet.imagen)" [alt]="pet.nombre" class="pet-img" />
+              }
             </div>
 
             <ion-card-header>
               <div class="pet-header">
-                <ion-card-title class="pet-name">{{ pet.name }}</ion-card-title>
-                <ion-badge class="badge-pink">{{ pet.age }} años</ion-badge>
+                <ion-card-title class="pet-name">{{ pet.nombre }}</ion-card-title>
+                <ion-badge class="badge-pink">{{ pet.edad }} años</ion-badge>
               </div>
             </ion-card-header>
 
             <ion-card-content>
-              <p class="pet-description">{{ pet.description }}</p>
+              <p class="pet-description">{{ pet.descripcion }}</p>
 
               <!-- Etiquetas -->
               <div class="tags-container ion-margin-vertical">
-                @for (tag of pet.tags; track tag) {
+                @for (tag of pet.etiquetas; track tag) {
                   <ion-chip outline="true" class="custom-chip">
                     <ion-label>{{ tag }}</ion-label>
                   </ion-chip>
@@ -66,16 +78,18 @@
                 [routerLink]="['/app/pet', pet.id]"
                 class="btn-primary"
               >
-                Conocer a {{ pet.name }}
+                Conocer a {{ pet.nombre }}
               </ion-button>
             </ion-card-content>
           </ion-card>
 
         </ion-col>
       } @empty {
-        <ion-col size="12" class="ion-text-center ion-padding">
-          <p class="empty-message">No se encontraron mascotas en esta categoría.</p>
-        </ion-col>
+        @if (!loading() && !errorMessage()) {
+          <ion-col size="12" class="ion-text-center ion-padding">
+            <p class="empty-message">No hay mascotas disponibles en esta categoría por ahora.</p>
+          </ion-col>
+        }
       }
     </ion-row>
   </ion-grid>
