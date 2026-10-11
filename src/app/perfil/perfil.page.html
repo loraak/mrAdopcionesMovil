@@ -1,53 +1,63 @@
 <ion-content class="profile-content ion-padding">
 
-  <!-- Encabezado -->
-  <div class="profile-header ion-text-center ion-margin-bottom">
-    <img src="assets/img/gatotriste.png" alt="Avatar" class="profile-avatar" />
-    <h2 class="profile-name">{{ user.name }}</h2>
-    <span class="badge-pink role-badge">{{ user.role }}</span>
-  </div>
+  @if (user(); as u) {
 
-  <!-- Información General -->
-  <ion-card class="info-card">
-    <ion-card-content>
-      <ion-item lines="none">
-        <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
-        <ion-label>
-          <h3>Correo</h3>
-          <p>{{ user.email }}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
-        <ion-label>
-          <h3>Teléfono</h3>
-          <p>{{ user.phone }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+    <!-- Encabezado -->
+    <div class="profile-header ion-text-center ion-margin-bottom">
+      <img src="assets/img/gatotriste.png" alt="Avatar" class="profile-avatar" />
+      <h2 class="profile-name">{{ u.username }}</h2>
+      <span class="badge-pink role-badge">{{ u.rol === 'DONANTE' ? 'Donante' : 'Adoptante' }}</span>
+    </div>
 
-  <!-- Información DONANTES -->
-  @if (user.role === 'DONANTE') {
+    @if (errorMessage()) {
+      <p class="ion-text-center" style="color: var(--ion-color-danger);">{{ errorMessage() }}</p>
+    }
 
-  <!-- Info Extra -->
-  <ion-card class="info-card">
-    <ion-card-content>
-      <ion-item lines="none">
-        <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
-        <ion-label>
-          <h3>Ubicación</h3>
-          <p>{{ user.location }}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
-        <ion-label>
-          <h3>Organización</h3>
-          <p>{{ user.organization }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+    <!-- Información General -->
+    <ion-card class="info-card">
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <h3>Correo</h3>
+            <p>{{ u.correo }}</p>
+          </ion-label>
+        </ion-item>
+
+        @if (u.telefono ) {
+          <ion-item lines="none">
+            <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h3>Teléfono</h3>
+              <p>{{ u.telefono }}</p>
+            </ion-label>
+          </ion-item>
+        }
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Información DONANTES -->
+    @if (u.rol === 'DONANTE') {
+      <ion-card class="info-card">
+        <ion-card-content>
+          <ion-item lines="none">
+            <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h3>Ubicación</h3>
+              <p>{{ u.locacion || 'No especificada' }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h3>Organización</h3>
+              <p>{{ u.organizacion || 'No especificada' }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    }
+
   }
+
 </ion-content>

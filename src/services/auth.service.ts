@@ -71,7 +71,12 @@ export class AuthService {
   }
 
   me(): Observable<UsuarioResponse> {
-    return this.http.get<UsuarioResponse>(`${this.apiUrl}/me`);
+    return this.http.get<UsuarioResponse>(`${this.apiUrl}/me`).pipe(
+      tap((user) => {
+        this._user.set(user);
+        try { localStorage.setItem(USER_KEY, JSON.stringify(user)); } catch {}
+      })
+    );
   }
 
   logout(): void {
