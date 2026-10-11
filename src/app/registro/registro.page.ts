@@ -11,7 +11,7 @@ import {
   IonSegmentButton,
   IonLabel, ToastController
 } from '@ionic/angular';
-import {AuthService, RegistroRequest, Rol} from "../services/auth.service";
+import {AuthService, RegistroRequest, Rol} from "../../services/auth.service";
 
 @Component({
   selector: 'app-register',

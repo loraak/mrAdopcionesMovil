@@ -8,9 +8,9 @@ import {
   IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
   IonBadge, IonChip, IonButton, IonSpinner
 } from '@ionic/angular';
-import { MascotaService } from '../services/mascota.service';
-import { Mascota } from '../models/mascota.model';
-import {resolverImagen} from "../services/imagen";
+import { MascotaService } from '../../services/mascota.service';
+import { Mascota } from '../../models/mascota.model';
+import {resolverImagen} from "../../services/imagen";
 
 @Component({
   selector: 'app-catalogo',

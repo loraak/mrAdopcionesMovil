@@ -17,8 +17,8 @@ import {
   IonItem
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { logOutOutline, homeOutline, pawOutline, informationCircleOutline, newspaperOutline, personCircleOutline, personOutline, heartOutline, documentTextOutline } from 'ionicons/icons';
-import {AuthService} from "../../services/auth.service";
+import { logOutOutline, homeOutline, pawOutline, informationCircleOutline, newspaperOutline, personCircleOutline, personOutline, heartOutline, documentTextOutline, paperPlaneOutline } from 'ionicons/icons';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-main-layout',
@@ -49,11 +49,12 @@ export class MainLayoutPage {
 
   constructor() {
     addIcons({
-      logOutOutline, homeOutline, pawOutline, informationCircleOutline, newspaperOutline, personCircleOutline, personOutline, heartOutline, documentTextOutline
+      logOutOutline, homeOutline, pawOutline, informationCircleOutline, newspaperOutline, personCircleOutline, personOutline, heartOutline, documentTextOutline, paperPlaneOutline
     });
   }
 
   get isDonante() { return this.auth.currentUser()?.rol === 'DONANTE'; }
+  get isAdoptante() { return this.auth.currentUser()?.rol === 'ADOPTANTE'; }
   get isLoggedIn() { return this.auth.isLoggedIn(); }
   get username() { return this.auth.currentUser()?.username ?? ''; }
   get rolLabel() { return this.auth.currentUser()?.rol === 'DONANTE' ? 'Donante': 'Adoptante'; }

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import {rolGuard} from "./services/rol.guard";
-import {authGuard} from "./services/auth.guard";
+import {rolGuard} from "../services/rol.guard";
+import {authGuard} from "../services/auth.guard";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'app/home', pathMatch: 'full' },
@@ -26,6 +26,10 @@ export const routes: Routes = [
         loadComponent: () => import('./catalogo/catalogo.page').then(m => m.CatalogoPage)
       },
       {
+        path: 'mascota/:id',
+        loadComponent: () => import('./catalogo/catalogo-detalle.page').then(m => m.MascotaDetallePage)
+      },
+      {
         path: 'nosotros',
         loadComponent: () => import('./nosotros/nosotros.page').then(m => m.NosotrosPage)
       },
@@ -35,6 +39,11 @@ export const routes: Routes = [
         path: 'perfil',
         canActivate: [authGuard],
         loadComponent: () => import('./perfil/perfil.page').then(m => m.PerfilPage)
+      },
+      {
+        path: 'solicitudes-respuesta',
+        canActivate: [rolGuard('ADOPTANTE')],
+        loadComponent: () => import('./solicitudes-respuesta/solicitudes-respuesta.page').then(m => m.MisSolicitudesPage)
       },
       {
         path: 'solicitud-adopcion',

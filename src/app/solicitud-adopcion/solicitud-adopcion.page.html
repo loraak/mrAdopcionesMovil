@@ -10,21 +10,31 @@
     <h1 class="catalog-title">Solicitudes de adopción</h1>
   </div>
 
+  @if (loading()) {
+    <div class="ion-text-center ion-padding">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <p class="empty-message ion-text-center">{{ errorMessage() }}</p>
+  }
+
   <!-- Lista de Solicitudes -->
   <ion-grid class="ion-no-padding">
     <ion-row>
-      @for (req of requests; track req.id) {
+      @for (req of solicitudes(); track req.id) {
         <ion-col size="12" size-md="6">
           <ion-card class="request-card">
 
             <ion-card-header>
               <div class="request-header">
                 <div>
-                  <ion-card-title class="applicant-name">{{ req.applicantName }}</ion-card-title>
-                  <p class="pet-target">Interesado/a en: <strong>{{ req.petName }}</strong></p>
+                  <ion-card-title class="applicant-name">{{ req.solicitanteNombre }}</ion-card-title>
+                  <p class="pet-target">Interesado/a en: <strong>{{ req.mascotaNombre }}</strong></p>
                 </div>
-                <span class="status-badge" [class]="req.status.toLowerCase().replace(' ', '-')">
-                  {{ req.status }}
+                <span class="status-badge" [class]="req.estatus.toLowerCase().replace(' ', '-')">
+                  {{ req.estatus }}
                 </span>
               </div>
             </ion-card-header>
@@ -33,22 +43,28 @@
               <!-- Info del Solicitante -->
               <div class="applicant-info ion-margin-bottom">
                 <p><ion-icon name="mail-outline"></ion-icon> {{ req.email }}</p>
-                <p><ion-icon name="call-outline"></ion-icon> {{ req.phone }}</p>
-                <p><ion-icon name="location-outline"></ion-icon> {{ req.location }}</p>
+                @if (req.telefono) {
+                  <p><ion-icon name="call-outline"></ion-icon> {{ req.telefono }}</p>
+                }
+                @if (req.ubicacion) {
+                  <p><ion-icon name="location-outline"></ion-icon> {{ req.ubicacion }}</p>
+                }
               </div>
 
               <!-- Mensaje/Motivo -->
               <div class="message-box ion-margin-bottom">
                 <p class="message-title">Mensaje del adoptante:</p>
-                <p class="message-text">"{{ req.message }}"</p>
+                <p class="message-text">"{{ req.mensaje }}"</p>
+                <p class="message-title">Enviada el {{ req.fecha | date: 'dd/MM/yyyy HH:mm' }}</p>
               </div>
 
               <!-- Botones de Acción (Solo si está pendiente) -->
-              @if (req.status === 'Pendiente') {
+              @if (req.estatus === 'Pendiente') {
                 <div class="action-buttons">
                   <ion-button
                     expand="block"
                     class="btn-accept"
+                    [disabled]="updatingId() !== null"
                     (click)="updateStatus(req, 'Aceptada')"
                   >
                     <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
@@ -60,6 +76,7 @@
                     fill="outline"
                     color="danger"
                     class="btn-reject"
+                    [disabled]="updatingId() !== null"
                     (click)="updateStatus(req, 'Rechazada')"
                   >
                     <ion-icon name="close-circle-outline" slot="start"></ion-icon>
@@ -72,9 +89,11 @@
           </ion-card>
         </ion-col>
       } @empty {
-        <ion-col size="12" class="ion-text-center ion-padding">
-          <p class="empty-message">No tienes solicitudes pendientes por el momento.</p>
-        </ion-col>
+        @if (!loading() && !errorMessage()) {
+          <ion-col size="12" class="ion-text-center ion-padding">
+            <p class="empty-message">No tienes solicitudes por el momento.</p>
+          </ion-col>
+        }
       }
     </ion-row>
   </ion-grid>

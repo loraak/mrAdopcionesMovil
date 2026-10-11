@@ -4,7 +4,7 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import {authInterceptor} from "./app/services/auth.interceptor";
+import {authInterceptor} from "./services/auth.interceptor";
 
 bootstrapApplication(AppComponent, {
   providers: [

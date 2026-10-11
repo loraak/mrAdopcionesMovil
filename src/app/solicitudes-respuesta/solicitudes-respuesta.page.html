@@ -1,0 +1,94 @@
+<ion-content class="requests-content ion-padding">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refrescar($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Migajas -->
+  <ion-breadcrumbs class="custom-breadcrumbs ion-margin-bottom">
+    <ion-breadcrumb routerLink="/app/home">Inicio</ion-breadcrumb>
+    <ion-breadcrumb>Mis solicitudes</ion-breadcrumb>
+  </ion-breadcrumbs>
+
+  <div class="header-section ion-text-center ion-margin-bottom">
+    <h1 class="catalog-title">Mis solicitudes de adopción</h1>
+  </div>
+
+  @if (loading()) {
+    <div class="ion-text-center ion-padding">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <p class="empty-message ion-text-center">{{ errorMessage() }}</p>
+  }
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      @for (req of solicitudes(); track req.id) {
+        <ion-col size="12" size-md="6">
+          <ion-card class="request-card">
+
+            <ion-card-header>
+              <div class="request-header">
+                <div>
+                  <ion-card-title class="applicant-name">{{ req.mascotaNombre }}</ion-card-title>
+                  <p class="pet-target">Enviada el {{ req.fecha | date: 'dd/MM/yyyy' }}</p>
+                </div>
+                <span class="status-badge" [class]="req.estatus.toLowerCase().replace(' ', '-')">
+                  {{ req.estatus }}
+                </span>
+              </div>
+            </ion-card-header>
+
+            <ion-card-content>
+              <!-- Lo que escribiste -->
+              <div class="message-box ion-margin-bottom">
+                <p class="message-title">Tu mensaje:</p>
+                <p class="message-text">"{{ req.mensaje }}"</p>
+              </div>
+
+              <!-- Qué significa cada estatus -->
+              @switch (req.estatus) {
+                @case ('Pendiente') {
+                  <p class="pet-target ion-margin-bottom">Esperando la respuesta del donante.</p>
+                }
+                @case ('Aceptada') {
+                  <p class="pet-target ion-margin-bottom">
+                    <strong>¡Felicidades!</strong> El donante aceptó tu solicitud y se pondrá en contacto contigo.
+                  </p>
+                }
+                @case ('Rechazada') {
+                  <p class="pet-target ion-margin-bottom">
+                    El donante no pudo aceptar esta solicitud. Puedes explorar otras mascotas en el catálogo.
+                  </p>
+                }
+              }
+
+              <ion-button
+                expand="block"
+                fill="outline"
+                class="btn-outline-pink"
+                [routerLink]="['/app/mascota', req.mascotaId]"
+              >
+                Ver mascota
+              </ion-button>
+            </ion-card-content>
+
+          </ion-card>
+        </ion-col>
+      } @empty {
+        @if (!loading() && !errorMessage()) {
+          <ion-col size="12" class="ion-text-center ion-padding">
+            <p class="empty-message">Aún no has enviado solicitudes de adopción.</p>
+            <ion-button routerLink="/app/catalogo" class="btn-primary">
+              Explorar el catálogo
+            </ion-button>
+          </ion-col>
+        }
+      }
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

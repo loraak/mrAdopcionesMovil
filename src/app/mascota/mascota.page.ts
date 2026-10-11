@@ -10,10 +10,10 @@ import {
   IonButton, IonButtons, IonIcon, IonFab, IonFabButton, IonModal, IonHeader, IonToolbar,
   IonTitle, IonInput, IonSelect, IonSelectOption, IonTextarea, IonSpinner, ToastController
 } from '@ionic/angular';
-import { MascotaService } from '../services/mascota.service';
-import {MascotaTipo, MascotaEstatus, Mascota, MascotaRequest} from "../models/mascota.model";
-import {UploadService} from "../services/upload.service";
-import {resolverImagen} from "../services/imagen";
+import { MascotaService } from '../../services/mascota.service';
+import {MascotaTipo, MascotaEstatus, Mascota, MascotaRequest} from "../../models/mascota.model";
+import {UploadService} from "../../services/upload.service";
+import {resolverImagen} from "../../services/imagen";
 import {map, of, switchMap} from "rxjs";
 
 interface MascotaForm {

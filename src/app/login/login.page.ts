@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {IonButton, IonContent, IonInput, IonRouterLink} from '@ionic/angular';
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-home',

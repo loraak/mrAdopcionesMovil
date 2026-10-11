@@ -1,0 +1,92 @@
+<ion-content class="catalog-content ion-padding">
+
+  <!-- Migajas -->
+  <ion-breadcrumbs class="custom-breadcrumbs ion-margin-bottom">
+    <ion-breadcrumb routerLink="/app/home">Inicio</ion-breadcrumb>
+    <ion-breadcrumb routerLink="/app/catalogo">Catálogo</ion-breadcrumb>
+    @if (mascota(); as pet) {
+      <ion-breadcrumb>{{ pet.nombre }}</ion-breadcrumb>
+    }
+  </ion-breadcrumbs>
+
+  @if (loading()) {
+    <div class="ion-text-center ion-padding">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <p class="empty-message ion-text-center">{{ errorMessage() }}</p>
+  }
+
+  @if (mascota(); as pet) {
+    <ion-card class="pet-card">
+      <div class="image-container">
+        @if (pet.imagen) {
+          <img [src]="imgSrc(pet.imagen)" [alt]="pet.nombre" class="pet-img" />
+        }
+      </div>
+
+      <ion-card-header>
+        <div class="pet-header">
+          <ion-card-title class="pet-name">{{ pet.nombre }}</ion-card-title>
+          <ion-badge class="badge-pink">{{ pet.edad }} años</ion-badge>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="pet-description">{{ pet.descripcion }}</p>
+
+        <div class="tags-container ion-margin-vertical">
+          @for (tag of pet.etiquetas; track tag) {
+            <ion-chip outline="true" class="custom-chip">
+              <ion-label>{{ tag }}</ion-label>
+            </ion-chip>
+          }
+        </div>
+
+        <!-- Zona de solicitud -->
+        @if (pet.estatus !== 'Disponible') {
+          <p class="empty-message">Esta mascota ya no está disponible para adopción.</p>
+        } @else if (!isLoggedIn) {
+          <ion-button
+            expand="block"
+            class="btn-primary"
+            routerLink="/login"
+            [queryParams]="{ returnUrl: '/app/pet/' + pet.id }"
+          >
+            Inicia sesión para solicitar la adopción
+          </ion-button>
+        } @else if (esAdoptante) {
+          @if (enviada()) {
+            <p class="empty-message">
+              ¡Solicitud enviada! El donante revisará tu mensaje y se pondrá en contacto contigo.
+            </p>
+          } @else {
+            <ion-textarea
+              class="custom-input"
+              label="Cuéntale al donante por qué quieres adoptar a {{ pet.nombre }}"
+              labelPlacement="floating"
+              fill="outline"
+              [rows]="4"
+              [maxlength]="1000"
+              [(ngModel)]="mensaje"
+            ></ion-textarea>
+
+            <ion-button
+              expand="block"
+              class="btn-primary ion-margin-top"
+              [disabled]="sending() || mensaje.trim().length < 10"
+              (click)="solicitar(pet.id)"
+            >
+              {{ sending() ? 'Enviando...' : 'Solicitar adopción' }}
+            </ion-button>
+          }
+        } @else {
+          <p class="empty-message">Solo los adoptantes pueden solicitar una adopción.</p>
+        }
+      </ion-card-content>
+    </ion-card>
+  }
+
+</ion-content>
