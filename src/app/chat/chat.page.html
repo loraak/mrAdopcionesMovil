@@ -1,0 +1,94 @@
+<ion-content class="chat-content">
+
+  <!-- Encabezado del chat -->
+  <div class="chat-topbar">
+    <ion-button fill="clear" size="small" (click)="volver()" aria-label="Volver">
+      <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+    </ion-button>
+
+    <div class="titles">
+      @if (info(); as i) {
+        <h2 class="chat-title">{{ i.otroNombre }}</h2>
+        <p class="chat-subtitle">Sobre la adopción de {{ i.mascotaNombre }}</p>
+      } @else {
+        <h2 class="chat-title">Chat</h2>
+      }
+    </div>
+
+    <ion-button
+      fill="clear"
+      size="small"
+      color="danger"
+      [disabled]="mensajes().length === 0"
+      (click)="limpiarHistorial()"
+      aria-label="Limpiar historial"
+    >
+      <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Contador de mensajes enviados por cada participante -->
+  @if (info(); as i) {
+    <div class="chat-counters">
+      <span class="counter-chip">Tú: {{ enviadosPorMi() }} enviados</span>
+      <span class="counter-chip">{{ i.otroNombre }}: {{ enviadosPorOtro() }} enviados</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="ion-text-center ion-padding">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <p class="chat-error">{{ errorMessage() }}</p>
+  }
+
+  @if (sinConexion()) {
+    <p class="chat-offline">Sin conexión. Reintentando...</p>
+  }
+
+  <!-- Conversación -->
+  <div class="chat-messages">
+    @for (m of mensajes(); track m.id) {
+      <div class="bubble-row" [class.mine]="m.propio">
+        <div class="bubble">
+          <p class="bubble-text">{{ m.contenido }}</p>
+          <span class="bubble-time">{{ m.fecha | date: 'HH:mm' }}</span>
+        </div>
+      </div>
+    } @empty {
+      @if (!loading() && !errorMessage()) {
+        <p class="chat-empty">Aún no hay mensajes. Saluda y coordinen la adopción.</p>
+      }
+    }
+  </div>
+
+  <!-- Caja de texto fija abajo -->
+  @if (!errorMessage()) {
+    <div slot="fixed" class="composer">
+      <ion-textarea
+        class="composer-input"
+        fill="outline"
+        shape="round"
+        placeholder="Escribe un mensaje"
+        [autoGrow]="true"
+        [rows]="1"
+        [maxlength]="maxMensaje"
+        [(ngModel)]="texto"
+        (keydown.enter)="onEnter($any($event))"
+      ></ion-textarea>
+
+      <ion-button
+        class="btn-primary"
+        aria-label="Enviar"
+        [disabled]="enviando() || !texto.trim()"
+        (click)="enviar()"
+      >
+        <ion-icon name="send" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  }
+
+</ion-content>

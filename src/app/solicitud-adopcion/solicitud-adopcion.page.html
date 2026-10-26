@@ -84,6 +84,13 @@
                   </ion-button>
                 </div>
               }
+
+              <!-- Chat: solo cuando la solicitud fue aceptada -->
+              @if (req.estatus === 'Aceptada') {
+                <ion-button expand="block" class="btn-primary" [routerLink]="['/app/chat', req.id]">
+                  Abrir chat
+                </ion-button>
+              }
             </ion-card-content>
 
           </ion-card>

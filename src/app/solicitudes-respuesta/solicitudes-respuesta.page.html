@@ -58,6 +58,9 @@
                   <p class="pet-target ion-margin-bottom">
                     <strong>¡Felicidades!</strong> El donante aceptó tu solicitud y se pondrá en contacto contigo.
                   </p>
+                  <ion-button expand="block" class="btn-primary ion-margin-bottom" [routerLink]="['/app/chat', req.id]">
+                    Abrir chat
+                  </ion-button>
                 }
                 @case ('Rechazada') {
                   <p class="pet-target ion-margin-bottom">
@@ -70,7 +73,7 @@
                 expand="block"
                 fill="outline"
                 class="btn-outline-pink"
-                [routerLink]="['/app/mascota', req.mascotaId]"
+                [routerLink]="['/app/pet', req.mascotaId]"
               >
                 Ver mascota
               </ion-button>

@@ -41,6 +41,11 @@ export const routes: Routes = [
         loadComponent: () => import('./perfil/perfil.page').then(m => m.PerfilPage)
       },
       {
+        path: 'chat/:id',
+        canActivate: [authGuard],
+        loadComponent: () => import('./chat/chat.page').then(m => m.ChatPage)
+      },
+      {
         path: 'solicitudes-respuesta',
         canActivate: [rolGuard('ADOPTANTE')],
         loadComponent: () => import('./solicitudes-respuesta/solicitudes-respuesta.page').then(m => m.MisSolicitudesPage)

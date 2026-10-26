@@ -17,24 +17,29 @@
           labelPlacement="floating"
           fill="outline"
           type="text"
+          autocomplete="username"
+          [maxlength]="maxUsuario"
           [(ngModel)]="username"
           name="username"
           [required]="true"
         ></ion-input>
 
+        <!-- type="password": los caracteres se ocultan -->
         <ion-input
           class="custom-input"
           label="Contraseña"
           labelPlacement="floating"
           fill="outline"
           type="password"
-          [(ngModel)]="contrasena"
+          autocomplete="current-password"
+          [maxlength]="maxPassword"
+          [(ngModel)]="password"
           name="password"
           [required]="true"
         ></ion-input>
 
         @if (errorMessage) {
-          <p style="color: var(--ion-color-danger); text-align: center; margin: 8px 0;">
+          <p role="alert" style="color: var(--ion-color-danger); text-align: center; margin: 8px 0;">
             {{ errorMessage }}
           </p>
         }
