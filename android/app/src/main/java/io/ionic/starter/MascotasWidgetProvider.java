@@ -18,7 +18,7 @@ import java.net.URL;
 
 public class MascotasWidgetProvider extends AppWidgetProvider {
 
-  private static final String API_URL = "http://10.13.19.115:8080/api/mascotas";
+  private static final String API_URL = "https://mradopciones-backend.onrender.com/api/mascotas";
   private static final String ACTION_REFRESH = "com.mradopciones.app.ACTION_REFRESH";
   public static final String PREFS = "widget_prefs";
   public static final String KEY_OPACIDAD = "opacidad_";
