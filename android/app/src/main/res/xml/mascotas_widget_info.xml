@@ -6,4 +6,6 @@
                     android:initialLayout="@layout/widget_mascotas"
                     android:resizeMode="horizontal|vertical"
                     android:widgetCategory="home_screen"
-                    android:description="@string/widget_description" />
+                    android:description="@string/widget_description"
+                    android:configure="io.ionic.starter.MascotasWidgetConfigActivity"
+                    android:widgetFeatures="reconfigurable" />

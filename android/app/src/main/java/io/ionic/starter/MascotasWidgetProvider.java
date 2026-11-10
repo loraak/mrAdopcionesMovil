@@ -18,8 +18,10 @@ import java.net.URL;
 
 public class MascotasWidgetProvider extends AppWidgetProvider {
 
-  private static final String API_URL = "http://localhost:8080/api/mascotas";
+  private static final String API_URL = "http://10.13.19.115:8080/api/mascotas";
   private static final String ACTION_REFRESH = "com.mradopciones.app.ACTION_REFRESH";
+  public static final String PREFS = "widget_prefs";
+  public static final String KEY_OPACIDAD = "opacidad_";
 
   @Override
   public void onUpdate(Context context, AppWidgetManager manager, int[] ids) {
@@ -60,16 +62,20 @@ public class MascotasWidgetProvider extends AppWidgetProvider {
       }
 
       for (int id : ids) {
-        manager.updateAppWidget(id, construirVista(context, conteo, ultima));
+        manager.updateAppWidget(id, construirVista(context, id, conteo, ultima));
       }
       result.finish();
     }).start();
   }
 
-  private RemoteViews construirVista(Context context, String conteo, String ultima) {
+  private RemoteViews construirVista(Context context, int widgetId, String conteo, String ultima) {
     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_mascotas);
     views.setTextViewText(R.id.widget_count, conteo);
     views.setTextViewText(R.id.widget_latest, ultima);
+
+    int porcentaje = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+      .getInt(KEY_OPACIDAD + widgetId, 100);
+    views.setInt(R.id.widget_bg, "setImageAlpha", porcentaje * 255 / 100);
 
     // Tocar el widget abre la app
     Intent abrir = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
