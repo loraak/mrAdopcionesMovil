@@ -57,7 +57,62 @@ export class ChatPage implements OnDestroy {
   });
 
   constructor() {
-    addIcons({ arrowBack, send, trashOutline, flagOutline });
+    addIcons({arrowBack, send, trashOutline, flagOutline});
+  }
+
+  async reportar() {
+    const hoja = await this.actionSheetCtrl.create({
+      header: '¿Qué quieres reportar?',
+      buttons: [
+        {
+          text: 'Problema técnico', handler: () => {
+            this.pedirDescripcion('TECNICO');
+          }
+        },
+        {
+          text: 'Problema con la otra persona', handler: () => {
+            this.pedirDescripcion('USUARIO');
+          }
+        },
+        {text: 'Cancelar', role: 'cancel'}
+      ]
+    });
+    await hoja.present();
+  }
+
+  private async pedirDescripcion(tipo: TipoReporte) {
+    const alerta = await this.alertCtrl.create({
+      header: 'Describe el problema',
+      inputs: [{
+        name: 'descripcion',
+        type: 'textarea',
+        placeholder: 'Cuéntanos qué pasó (mínimo 10 caracteres)',
+        attributes: {maxlength: 500}
+      }],
+      buttons: [
+        {text: 'Cancelar', role: 'cancel'},
+        {
+          text: 'Enviar',
+          handler: (datos) => {
+            const texto = (datos.descripcion ?? '').trim();
+            if (texto.length < 10) {
+              this.aviso('Escribe al menos 10 caracteres', 'danger', 2000);
+              return false; // mantiene el diálogo abierto
+            }
+            this.enviarReporte(tipo, texto);
+            return true;
+          }
+        }
+      ]
+    });
+    await alerta.present();
+  }
+
+  private enviarReporte(tipo: TipoReporte, descripcion: string) {
+    this.reporteService.crear(this.solicitudId, tipo, descripcion).subscribe({
+      next: () => this.aviso('Reporte enviado. Gracias por avisarnos.'),
+      error: (err) => this.aviso(this.mensajeError(err), 'danger', 2500)
+    });
   }
 
   ionViewWillEnter() {
@@ -119,8 +174,8 @@ export class ChatPage implements OnDestroy {
       header: 'Limpiar historial',
       message: 'Se ocultarán los mensajes actuales solo para ti. La otra persona seguirá viéndolos.',
       buttons: [
-        { text: 'Cancelar', role: 'cancel' },
-        { text: 'Limpiar', role: 'destructive', handler: () => this.confirmarLimpieza() }
+        {text: 'Cancelar', role: 'cancel'},
+        {text: 'Limpiar', role: 'destructive', handler: () => this.confirmarLimpieza()}
       ]
     });
     await alerta.present();
@@ -212,42 +267,7 @@ export class ChatPage implements OnDestroy {
   }
 
   private async aviso(message: string, color: 'success' | 'danger' = 'success', duration = 1200) {
-    const toast = await this.toastCtrl.create({ message, color, duration, position: 'top' });
+    const toast = await this.toastCtrl.create({message, color, duration, position: 'top'});
     await toast.present();
-  }
-
-  private async pedirDescripcion(tipo: TipoReporte) {
-    const alerta = await this.alertCtrl.create({
-      header: 'Describe el problema',
-      inputs: [{
-        name: 'descripcion',
-        type: 'textarea',
-        placeholder: 'Cuéntanos qué pasó (mínimo 10 caracteres)',
-        attributes: { maxlength: 500 }
-      }],
-      buttons: [
-        { text: 'Cancelar', role: 'cancel' },
-        {
-          text: 'Enviar',
-          handler: (datos) => {
-            const texto = (datos.descripcion ?? '').trim();
-            if (texto.length < 10) {
-              this.aviso('Escribe al menos 10 caracteres', 'danger', 2000);
-              return false; // mantiene el diálogo abierto
-            }
-            this.enviarReporte(tipo, texto);
-            return true;
-          }
-        }
-      ]
-    });
-    await alerta.present();
-  }
-
-  private enviarReporte(tipo: TipoReporte, descripcion: string) {
-    this.reporteService.crear(this.solicitudId, tipo, descripcion).subscribe({
-      next: () => this.aviso('Reporte enviado. Gracias por avisarnos.'),
-      error: (err) => this.aviso(this.mensajeError(err), 'danger', 2500)
-    });
   }
 }

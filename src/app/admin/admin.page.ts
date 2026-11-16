@@ -11,7 +11,7 @@ import { Reporte } from '../../models/reporte.model';
 
 @Component({
   selector: 'app-admin-reportes',
-  templateUrl: './admin-reportes.page.html',
+  templateUrl: './admin.page.html',
   styleUrls: ['../solicitud-adopcion/solicitud-adopcion.page.scss'],
   standalone: true,
   imports: [
