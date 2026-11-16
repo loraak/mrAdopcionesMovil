@@ -48,38 +48,46 @@
 </ion-content>
 
 <ion-tab-bar slot="bottom" class="custom-tab-bar">
-  <ion-tab-button tab="home" routerLink="/app/home">
-    <ion-icon name="home-outline"></ion-icon>
-    <ion-label>Inicio</ion-label>
-  </ion-tab-button>
+  @if (isAdmin) {
+    <!-- Solo para el administrador -->
+    <ion-tab-button tab="reports" routerLink="/app/reportes">
+      <ion-icon name="flag-outline"></ion-icon>
+      <ion-label>Reportes</ion-label>
+    </ion-tab-button>
+  } @else {
+    <ion-tab-button tab="home" routerLink="/app/home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
 
-  <ion-tab-button tab="catalog" routerLink="/app/catalogo">
-    <ion-icon name="paw-outline"></ion-icon>
-    <ion-label>Catálogo</ion-label>
-  </ion-tab-button>
+    <ion-tab-button tab="catalog" routerLink="/app/catalogo">
+      <ion-icon name="paw-outline"></ion-icon>
+      <ion-label>Catálogo</ion-label>
+    </ion-tab-button>
 
-  @if (isAdoptante) {
-    <ion-tab-button tab="my-requests" routerLink="/app/solicitudes-respuesta">
-      <ion-icon name="paper-plane-outline"></ion-icon>
-      <ion-label>Mis solicitudes</ion-label>
+    @if (isAdoptante) {
+      <ion-tab-button tab="my-requests" routerLink="/app/solicitudes-respuesta">
+        <ion-icon name="paper-plane-outline"></ion-icon>
+        <ion-label>Mis solicitudes</ion-label>
+      </ion-tab-button>
+    }
+
+    <!-- Solo para donantes -->
+    @if (isDonante) {
+      <ion-tab-button tab="my-pets" routerLink="/app/mascota">
+        <ion-icon name="heart-outline"></ion-icon>
+        <ion-label>Mis mascotas</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="requests" routerLink="/app/solicitud-adopcion">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <ion-label>Solicitudes</ion-label>
+      </ion-tab-button>
+    }
+
+    <ion-tab-button tab="about-us" routerLink="/app/nosotros">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <ion-label>Nosotros</ion-label>
     </ion-tab-button>
   }
-
-  <!-- Solo para donantes -->
-  @if (isDonante) {
-    <ion-tab-button tab="my-pets" routerLink="/app/mascota">
-      <ion-icon name="heart-outline"></ion-icon>
-      <ion-label>Mis mascotas</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="requests" routerLink="/app/solicitud-adopcion">
-      <ion-icon name="document-text-outline"></ion-icon>
-      <ion-label>Solicitudes</ion-label>
-    </ion-tab-button>
-  }
-
-  <ion-tab-button tab="about-us" routerLink="/app/nosotros">
-    <ion-icon name="information-circle-outline"></ion-icon>
-    <ion-label>Nosotros</ion-label>
-  </ion-tab-button>
 </ion-tab-bar>

@@ -53,7 +53,7 @@ export class LoginPage {
       next: (res) => {
         this.loading = false;
         this.password = '';
-        this.router.navigateByUrl(this.destino());
+        this.router.navigateByUrl(this.destino(res.user.rol));
         this.mostrarMensaje(`¡Bienvenido, ${res.user.username}!`, 'success');
       },
       error: (err) => {
@@ -74,9 +74,10 @@ export class LoginPage {
   }
 
   // Vuelve a la página que quería visitar; solo acepta rutas internas
-  private destino(): string {
+  private destino(rol: string): string {
     const url = this.route.snapshot.queryParamMap.get('returnUrl');
-    return url && url.startsWith('/') && !url.startsWith('//') ? url : '/app/home';
+    if (url && url.startsWith('/') && !url.startsWith('//')) return url;
+    return rol === 'ADMIN' ? '/app/reportes' : '/app/home';
   }
 
   private async mostrarMensaje(message: string, color: 'success' | 'danger') {

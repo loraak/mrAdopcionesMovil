@@ -57,7 +57,11 @@ export class MainLayoutPage {
   get isAdoptante() { return this.auth.currentUser()?.rol === 'ADOPTANTE'; }
   get isLoggedIn() { return this.auth.isLoggedIn(); }
   get username() { return this.auth.currentUser()?.username ?? ''; }
-  get rolLabel() { return this.auth.currentUser()?.rol === 'DONANTE' ? 'Donante': 'Adoptante'; }
+  get rolLabel() {
+    const rol = this.auth.currentUser()?.rol;
+    return rol === 'DONANTE' ? 'Donante' : rol === 'ADMIN' ? 'Administrador' : 'Adoptante';
+  }
+  get isAdmin() { return this.auth.currentUser()?.rol === 'ADMIN'; }
 
   logout() {
     this.auth.logout();

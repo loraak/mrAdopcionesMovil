@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 
 export const API_URL = 'https://mradopciones-backend.onrender.com/api';
-export type Rol = 'ADOPTANTE' | 'DONANTE';
+export type Rol = 'ADOPTANTE' | 'DONANTE' | 'ADMIN';
 
 export interface RegistroRequest {
   username: string;

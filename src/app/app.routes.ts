@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import {rolGuard} from "../services/rol.guard";
 import {authGuard} from "../services/auth.guard";
+import {noAdminGuard} from "../services/no-admin.guard";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'app/home', pathMatch: 'full' },
@@ -19,18 +20,22 @@ export const routes: Routes = [
       // Públicas
       {
         path: 'home',
+        canActivate: [noAdminGuard],
         loadComponent: () => import('./home/home.page').then(m => m.HomePage)
       },
       {
         path: 'catalogo',
+        canActivate: [noAdminGuard],
         loadComponent: () => import('./catalogo/catalogo.page').then(m => m.CatalogoPage)
       },
       {
         path: 'mascota/:id',
+        canActivate: [noAdminGuard],
         loadComponent: () => import('./catalogo/catalogo-detalle.page').then(m => m.MascotaDetallePage)
       },
       {
         path: 'nosotros',
+        canActivate: [noAdminGuard],
         loadComponent: () => import('./nosotros/nosotros.page').then(m => m.NosotrosPage)
       },
 
@@ -42,8 +47,13 @@ export const routes: Routes = [
       },
       {
         path: 'chat/:id',
-        canActivate: [authGuard],
+        canActivate: [rolGuard('ADOPTANTE', 'DONANTE')],
         loadComponent: () => import('./chat/chat.page').then(m => m.ChatPage)
+      },
+      {
+        path: 'reportes',
+        canActivate: [rolGuard('ADMIN')],
+        loadComponent: () => import('./admin/admin.page').then(m => m.AdminReportesPage)
       },
       {
         path: 'solicitudes-respuesta',

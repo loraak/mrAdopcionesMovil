@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+import android.content.SharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -104,5 +105,12 @@ public class MascotasWidgetProvider extends AppWidgetProvider {
     } finally {
       con.disconnect();
     }
+  }
+
+  @Override
+  public void onDeleted(Context context, int[] ids) {
+    SharedPreferences.Editor ed = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit();
+    for (int id : ids) ed.remove(KEY_OPACIDAD + id);
+    ed.apply();
   }
 }

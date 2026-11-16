@@ -6,7 +6,7 @@
     <div class="profile-header ion-text-center ion-margin-bottom">
       <img src="assets/img/gatotriste.png" alt="Avatar" class="profile-avatar" />
       <h2 class="profile-name">{{ u.username }}</h2>
-      <span class="badge-pink role-badge">{{ u.rol === 'DONANTE' ? 'Donante' : 'Adoptante' }}</span>
+      <span class="badge-pink role-badge">{{ u.rol === 'DONANTE' ? 'Donante' : u.rol === 'ADMIN' ? 'Administrador' : 'Adoptante' }}</span>
     </div>
 
     @if (errorMessage()) {

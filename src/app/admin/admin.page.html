@@ -1,0 +1,71 @@
+<ion-content class="requests-content ion-padding">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refrescar($any($event))">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="header-section ion-text-center ion-margin-bottom">
+    <h1 class="catalog-title">Reportes</h1>
+  </div>
+
+  <ion-segment [value]="filtro()" (ionChange)="cambiarFiltro($any($event))" class="ion-margin-bottom">
+    <ion-segment-button value="Pendiente"><ion-label>Pendientes</ion-label></ion-segment-button>
+    <ion-segment-button value="Todos"><ion-label>Todos</ion-label></ion-segment-button>
+  </ion-segment>
+
+  @if (loading()) {
+    <div class="ion-text-center ion-padding"><ion-spinner name="crescent"></ion-spinner></div>
+  }
+  @if (errorMessage()) {
+    <p class="empty-message ion-text-center">{{ errorMessage() }}</p>
+  }
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      @for (r of visibles(); track r.id) {
+        <ion-col size="12" size-md="6">
+          <ion-card class="request-card">
+            <ion-card-header>
+              <div class="request-header">
+                <div>
+                  <ion-card-title class="applicant-name">
+                    {{ r.tipo === 'TECNICO' ? 'Problema técnico' : 'Problema con un usuario' }}
+                  </ion-card-title>
+                  <p class="pet-target">Chat sobre: <strong>{{ r.mascotaNombre }}</strong></p>
+                </div>
+                <span class="status-badge" [class]="clase(r)">{{ r.estatus }}</span>
+              </div>
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="applicant-info ion-margin-bottom">
+                <p>Reporta: <strong>{{ r.reportanteNombre }}</strong></p>
+                @if (r.reportadoNombre) {
+                  <p>Reportado: <strong>{{ r.reportadoNombre }}</strong></p>
+                }
+              </div>
+
+              <div class="message-box ion-margin-bottom">
+                <p class="message-text">"{{ r.descripcion }}"</p>
+                <p class="message-title">{{ r.fecha | date: 'dd/MM/yyyy HH:mm' }}</p>
+              </div>
+
+              @if (r.estatus === 'Pendiente') {
+                <ion-button expand="block" class="btn-accept"
+                            [disabled]="updatingId() !== null" (click)="marcarRevisado(r)">
+                  Marcar como revisado
+                </ion-button>
+              }
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      } @empty {
+        @if (!loading() && !errorMessage()) {
+          <ion-col size="12" class="ion-text-center ion-padding">
+            <p class="empty-message">No hay reportes {{ filtro() === 'Pendiente' ? 'pendientes' : '' }}.</p>
+          </ion-col>
+        }
+      }
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, Subscription, catchError, switchMap, timer } from 'rxjs';
 import { addIcons } from 'ionicons';
-import { arrowBack, send, trashOutline } from 'ionicons/icons';
+import {arrowBack, flagOutline, send, trashOutline} from 'ionicons/icons';
 import {
-  IonContent, IonButton, IonIcon, IonTextarea, IonSpinner, ToastController, AlertController
+  IonContent, IonButton, IonIcon, IonTextarea, IonSpinner, ToastController, AlertController, ActionSheetController
 } from '@ionic/angular';
 import {ChatService} from "../../services/chat.service";
 import {ChatInfo, Mensaje} from "../../models/chat.model";
+import {ReporteService} from "../../services/reporte.service";
+import {TipoReporte} from "../../models/reporte.model";
 
 const INTERVALO_MS = 4000; // cada cuánto se consultan mensajes nuevos mientras el chat está abierto
 
@@ -26,6 +28,9 @@ export class ChatPage implements OnDestroy {
   private chatService = inject(ChatService);
   private toastCtrl = inject(ToastController);
   private alertCtrl = inject(AlertController);
+
+  private actionSheetCtrl = inject(ActionSheetController);
+  private reporteService = inject(ReporteService);
 
   private content = viewChild(IonContent);
   private solicitudId = 0;
@@ -52,7 +57,7 @@ export class ChatPage implements OnDestroy {
   });
 
   constructor() {
-    addIcons({ arrowBack, send, trashOutline });
+    addIcons({ arrowBack, send, trashOutline, flagOutline });
   }
 
   ionViewWillEnter() {
@@ -209,5 +214,40 @@ export class ChatPage implements OnDestroy {
   private async aviso(message: string, color: 'success' | 'danger' = 'success', duration = 1200) {
     const toast = await this.toastCtrl.create({ message, color, duration, position: 'top' });
     await toast.present();
+  }
+
+  private async pedirDescripcion(tipo: TipoReporte) {
+    const alerta = await this.alertCtrl.create({
+      header: 'Describe el problema',
+      inputs: [{
+        name: 'descripcion',
+        type: 'textarea',
+        placeholder: 'Cuéntanos qué pasó (mínimo 10 caracteres)',
+        attributes: { maxlength: 500 }
+      }],
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Enviar',
+          handler: (datos) => {
+            const texto = (datos.descripcion ?? '').trim();
+            if (texto.length < 10) {
+              this.aviso('Escribe al menos 10 caracteres', 'danger', 2000);
+              return false; // mantiene el diálogo abierto
+            }
+            this.enviarReporte(tipo, texto);
+            return true;
+          }
+        }
+      ]
+    });
+    await alerta.present();
+  }
+
+  private enviarReporte(tipo: TipoReporte, descripcion: string) {
+    this.reporteService.crear(this.solicitudId, tipo, descripcion).subscribe({
+      next: () => this.aviso('Reporte enviado. Gracias por avisarnos.'),
+      error: (err) => this.aviso(this.mensajeError(err), 'danger', 2500)
+    });
   }
 }
